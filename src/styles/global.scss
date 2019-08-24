@@ -12,7 +12,8 @@ body {
   // background-image: url('../img/pat.png');
   // background-image: url('../img/pat-2.png');
   // transition: .5s;
-
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   color: #222;
   font-family: 'Raleway', sans-serif;
   font-size: 1em;

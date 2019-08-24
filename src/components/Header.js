@@ -16,7 +16,7 @@ const Container = styled.header`
   padding-top: 0.5rem;
   text-align: center;
   font-size: 1.1rem;
-  font-weight: 300;
+  font-weight: 700;
   color: #fff;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.4);
   @media screen and (min-width: 600px) {
@@ -26,7 +26,7 @@ const Container = styled.header`
 `;
 class Header extends React.Component {
   render() {
-    return <Container>This is Header</Container>;
+    return <Container>My Fridge</Container>;
   }
 }
 
