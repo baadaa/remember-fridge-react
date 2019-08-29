@@ -12,6 +12,7 @@ const Food = styled.article`
   display: flex;
   position: relative;
   flex-basis: 350px;
+
   @media screen and (min-width: 600px) {
     flex-basis: 49%;
   }
