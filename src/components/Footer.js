@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-// import Colors from './Colors';
 
 const Foot = styled.footer`
   position: fixed;
@@ -27,18 +26,14 @@ const Foot = styled.footer`
     cursor: pointer;
   }
 `;
-const year = new Date().getFullYear;
-class Footer extends React.Component {
-  render() {
-    return (
-      <Foot>
-        Copyright &copy;{year} Bumhan Yu
-        <a href="/" class="logout-btn">
-          Logout
-        </a>
-      </Foot>
-    );
-  }
-}
+const year = new Date().getFullYear();
 
+const Footer = () => (
+  <Foot>
+    Copyright &copy;{year} Bumhan Yu
+    <a href="/" className="logout-btn">
+      Logout
+    </a>
+  </Foot>
+);
 export default Footer;

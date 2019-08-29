@@ -42,7 +42,6 @@ const Nav = styled.nav`
       .rgb()
       .string()};
     box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
-
     border-bottom: 4px solid #fff;
   }
 `;
@@ -115,30 +114,6 @@ const Head = styled.header`
   }
 `;
 
-// class Li extends React.Component {
-//   state = {
-//     active: this.props.active
-//   };
-//   handleNavSelection = () => {
-//     if (this.state.active) {
-//       this.setState({ active: false });
-//     } else {
-//       this.setState({ active: true });
-//     }
-//   };
-//   render() {
-//     const { label } = this.props;
-//     return (
-//       <li
-//         className={this.state.active ? "selected" : ""}
-//         onClick={this.handleNavSelection}
-//       >
-//         {label}
-//       </li>
-//     );
-//   }
-// }
-
 class Header extends React.Component {
   state = {
     selectedSection: "fridge"
@@ -156,10 +131,6 @@ class Header extends React.Component {
           </ShoppingList>
           My Fridge
           <Nav>
-            {/* <ul>
-              <Li active={true} label="Fridge" />
-              <Li active={false} label="Freezer" />
-            </ul> */}
             <input
               type="radio"
               id="fridge"
@@ -168,7 +139,7 @@ class Header extends React.Component {
               checked={this.state.selectedSection === "fridge"}
               onChange={this.handleSectionChange}
             />
-            <label for="fridge">Fridge</label>
+            <label htmlFor="fridge">Fridge</label>
             <input
               type="radio"
               id="freezer"
@@ -177,7 +148,7 @@ class Header extends React.Component {
               checked={this.state.selectedSection === "freezer"}
               onChange={this.handleSectionChange}
             />
-            <label for="freezer">Freezer</label>
+            <label htmlFor="freezer">Freezer</label>
           </Nav>
         </InnerContainer>
       </Head>
