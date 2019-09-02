@@ -2,7 +2,7 @@ import React from "react";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Refrigerator from "./components/Refrigerator";
+import Refrigerator from "./components/Refrigerator_alt";
 
 function App() {
   return (

@@ -5,7 +5,7 @@ import ColorPalette from "./ColorPalette";
 import listIcon from "../img/shopping-list.svg";
 
 const InnerContainer = styled.div`
-  max-width: 1000px;
+  max-width: 740px;
   padding: 0 10px;
   margin: 0 auto;
   position: relative;
