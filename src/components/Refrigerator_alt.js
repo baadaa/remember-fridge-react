@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import FoodItem from "./FoodItem_alt";
+import AddFood from "./AddFood";
 
 const Container = styled.main`
   max-width: 740px;
@@ -71,6 +72,7 @@ class Refrigerator extends React.Component {
   render() {
     return (
       <Container>
+        <AddFood />
         {itemList.map((item, i) => (
           <FoodItem
             key={i}
