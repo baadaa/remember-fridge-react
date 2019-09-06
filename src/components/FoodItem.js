@@ -71,7 +71,7 @@ const FoodDetail = styled.div`
   }
 `;
 class FoodItem extends React.Component {
-  render(props) {
+  render() {
     const name = this.props.name ? <h2>{this.props.name}</h2> : "";
     const quantity = this.props.quantity ? (
       <span className="quantity">{this.props.quantity}</span>

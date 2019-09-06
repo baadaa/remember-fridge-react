@@ -37,10 +37,13 @@ const Btn = styled.button`
   }
 `;
 class AddFood extends React.Component {
+  click = () => {
+    this.props.launchEditor();
+  };
   render() {
     return (
       <div style={{ width: "100%", margin: "0 auto" }}>
-        <Btn>
+        <Btn onClick={this.click}>
           <span className="plus">+</span>
           <span className="text">
             Add an item

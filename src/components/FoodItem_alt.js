@@ -37,7 +37,7 @@ const Food = styled.article`
   .flipper {
     width: 170px;
     height: 170px;
-    transition: 0.3s;
+    transition: transform 0.3s;
     transform-style: preserve-3d;
     position: relative;
     @media screen and (max-width: 380px) {
@@ -60,8 +60,8 @@ const Food = styled.article`
     box-sizing: border-box;
     height: 170px;
     border-radius: 10px;
-    // overflow: hidden;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     position: absolute;
     top: 0;
