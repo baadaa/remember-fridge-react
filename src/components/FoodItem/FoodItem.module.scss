@@ -1,59 +1,66 @@
-import React from "react";
-import styled from "@emotion/styled";
-import Color from "color";
-import addIcon from "../img/added.svg";
-import closeIcon from "../img/close.svg";
-import expireIcon from "../img/expires.svg";
-import ColorPalette from "./ColorPalette";
+@import '../../styles/colors.scss';
 
-const Food = styled.article`
+.food {
   margin-bottom: 20px;
   margin-right: 20px;
   position: relative;
+
   &:hover {
     transform: scale(1.05);
   }
+
   &:nth-of-type(4n) {
     margin-right: 0;
   }
+
   @media screen and (max-width: 760px) {
     &:nth-of-type(4n) {
       margin-right: 20px;
     }
+
     &:nth-of-type(3n) {
       margin-right: 0;
     }
   }
+
   @media screen and (max-width: 570px) {
     &:nth-of-type(3n) {
       margin-right: 20px;
     }
+
     &:nth-of-type(2n) {
       margin-right: 0;
     }
   }
+
   transition: transform 0.2s;
   perspective: 1000px;
+
   .flipper {
     width: 170px;
     height: 170px;
-    transition: transform 0.3s;
+    transition: transform 0.3s, box-shadow .2s;
+    ;
     transform-style: preserve-3d;
     position: relative;
+
     @media screen and (max-width: 380px) {
       width: 150px;
       height: 150px;
     }
+
     @media screen and (max-width: 340px) {
       width: 130px;
       height: 130px;
     }
   }
+
   &.flipped {
     .flipper {
       transform: rotateY(180deg);
     }
   }
+
   .front,
   .back {
     width: 170px;
@@ -61,24 +68,31 @@ const Food = styled.article`
     height: 170px;
     border-radius: 10px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
-    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     position: absolute;
     top: 0;
     left: 0;
     background: #fff;
+
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+    }
+
     @media screen and (max-width: 380px) {
       width: 150px;
       height: 150px;
     }
+
     @media screen and (max-width: 340px) {
       width: 130px;
       height: 130px;
     }
   }
+
   .front {
     z-index: 2;
     transform: rotateY(0deg);
+
     h2 {
       position: absolute;
       right: -5px;
@@ -88,6 +102,7 @@ const Food = styled.article`
       padding: 5px 10px;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
       max-width: 120px;
+
       &::after {
         content: "";
         position: absolute;
@@ -100,6 +115,7 @@ const Food = styled.article`
         border-color: #777 transparent transparent transparent;
       }
     }
+
     .quantity {
       font-weight: 700;
       font-size: 10px;
@@ -110,38 +126,23 @@ const Food = styled.article`
       padding: 8px;
       border-radius: 30px;
       background: rgba(0, 0, 0, 0.75);
-      color: ${ColorPalette.$berry};
+      color: $berry;
       color: #fff;
       box-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
     }
   }
+
   .back {
     padding: 10px;
     transform: rotateY(180deg);
   }
-`;
-const FoodImg = styled.img`
-  cursor: pointer;
-  width: 170px;
-  height: 170px;
-  border-radius: 10px;
-  object-fit: cover;
-  @media screen and (max-width: 380px) {
-    width: 150px;
-    height: 150px;
-  }
-  @media screen and (max-width: 340px) {
-    width: 130px;
-    height: 130px;
-  }
-`;
+}
 
-const FoodDetail = styled.div`
+.foodDetail {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  // padding-right: 10px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
@@ -151,6 +152,7 @@ const FoodDetail = styled.div`
     line-height: 1.2;
     font-weight: 400;
   }
+
   .quantity {
     position: static;
     font-size: 14px;
@@ -159,26 +161,32 @@ const FoodDetail = styled.div`
     padding: 0;
     color: #000;
     font-weight: 400;
+
     &::before {
       content: "(";
     }
+
     &::after {
       content: ")";
     }
   }
+
   .dates {
     font-weight: 200;
     font-size: 12px;
     display: flex;
     align-items: center;
+
     &:first-of-type {
       margin-top: 8px;
     }
+
     .addedIcon {
       width: 16px;
       height: 20px;
       margin-right: 5px;
     }
+
     .expireIcon {
       width: 16px;
       height: 16px;
@@ -186,6 +194,7 @@ const FoodDetail = styled.div`
       padding-top: 3px;
     }
   }
+
   .closeItem {
     position: absolute;
     cursor: pointer;
@@ -193,18 +202,40 @@ const FoodDetail = styled.div`
     top: -5px;
     width: 25px;
     height: 25px;
-    transition: transform 0.2s;
+    transition: transform 0.2s, opacity .2s;
+    opacity: 1;
+    z-index: 3;
+
     &:hover {
       transform: scale(1.1);
     }
   }
-`;
+}
 
-const EditBtns = styled.nav`
+.foodImg {
+  cursor: pointer;
+  width: 170px;
+  height: 170px;
+  border-radius: 10px;
+  object-fit: cover;
+
+  @media screen and (max-width: 380px) {
+    width: 150px;
+    height: 150px;
+  }
+
+  @media screen and (max-width: 340px) {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+.editBtns {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+
   button {
     width: 50%;
     position: absolute;
@@ -217,99 +248,108 @@ const EditBtns = styled.nav`
     padding: 5px;
     font-weight: 700;
     transition: background 0.2s;
+
     &.edit {
       left: 0;
-      background: ${ColorPalette.$yellow};
+      background: $green;
       border-radius: 0 0 0 10px;
+
       &:hover {
-        background: ${Color(ColorPalette.$yellow)
-          .darken(0.15)
-          .rgb()
-          .string()};
+        background: darken($green, 15%);
       }
     }
+
     &.delete {
       right: 0;
-      background: ${ColorPalette.$berry};
+      background: $berry;
       border-radius: 0 0 10px 0;
+
       &:hover {
-        background: ${Color(ColorPalette.$berry)
-          .darken(0.15)
-          .rgb()
-          .string()};
+        background: darken($berry, 15%);
       }
     }
-  }
-`;
-class FoodItem extends React.Component {
-  state = {
-    flipped: false,
-    name: this.props.name,
-    added: this.props.added,
-    expires: this.props.expires,
-    quantity: this.props.quantity
-  };
-  flip = () => {
-    this.state.flipped
-      ? this.setState({ flipped: false })
-      : this.setState({ flipped: true });
-  };
-  render() {
-    const flipClass = this.state.flipped ? "flipped" : "";
-
-    const name = this.state.name ? <h2>{this.state.name}</h2> : "";
-    const quantity = this.state.quantity ? (
-      <span className="quantity">{this.state.quantity}</span>
-    ) : (
-      ""
-    );
-    const added = this.state.added ? (
-      <div className="dates">
-        <img className="addedIcon" src={addIcon} alt="" />
-        {this.state.added}
-      </div>
-    ) : (
-      ""
-    );
-    const expires = this.state.expires ? (
-      <div className="dates">
-        <img className="expireIcon" src={expireIcon} alt="" />
-        {this.state.expires}
-      </div>
-    ) : (
-      ""
-    );
-
-    return (
-      <Food className={flipClass}>
-        <div className="flipper">
-          <div className="front" onClick={this.flip}>
-            <FoodImg src={this.props.img} />
-            {name}
-            {quantity}
-          </div>
-          {/* <div className="back"> */}
-          <FoodDetail className="back">
-            {name}
-            {quantity}
-            {added}
-            {expires}
-            <EditBtns>
-              <button className="edit">Edit</button>
-              <button className="delete">Delete</button>
-            </EditBtns>
-            <img
-              src={closeIcon}
-              className="closeItem"
-              onClick={this.flip}
-              alt=""
-            />
-          </FoodDetail>
-          {/* </div> */}
-        </div>
-      </Food>
-    );
   }
 }
 
-export default FoodItem;
+.deleteConfirm {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(50px);
+  transition: transform .2s, opacity .2s;
+
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background: rgba(255, 255, 255, .9);
+  color: #202020;
+  border-radius: 10px;
+
+  h4,
+  h6 {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: 0 10px;
+    text-align: center;
+  }
+
+  h4 {
+    margin-top: 30px;
+  }
+
+  h6 {
+    margin-top: 5px;
+  }
+
+  .deleteConfirmBtns {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    color: #fff;
+
+    button {
+      border: none;
+      width: 48%;
+      font-weight: 700;
+      line-height: 1.2;
+      padding: 10px 0;
+      border-radius: 15px;
+      transition: transform .2s, box-shadow .2s;
+
+      &:hover {
+        transform: scale(1.04);
+        box-shadow: 0 1px 5px rgba(0, 0, 0, .2);
+      }
+
+      span {
+        display: block;
+        font-size: 0.6em;
+      }
+    }
+
+    .deleteYes {
+      background: $berry;
+      color: lighten($berry, 50%);
+
+    }
+
+    .deleteNo {
+      color: darken($yellow, 28%);
+      background: $yellow;
+
+    }
+  }
+}
+
+.deleting {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}

@@ -1,13 +1,22 @@
 import React from "react";
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Refrigerator from "./components/Refrigerator_alt";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import Refrigerator from "./components/Refrigerator/Refrigerator";
 
-function App() {
-  return (
+class App extends React.Component {
+  state = {
+    selectedSection: "fridge"
+  };
+  handleSectionChange = changeEvent => {
+    this.setState({ selectedSection: changeEvent.target.value });
+  };
+  render = () => (
     <React.Fragment>
-      <Header />
+      <Header
+        section={this.state.selectedSection}
+        change={this.handleSectionChange}
+      />
       <Refrigerator />
       <Footer />
     </React.Fragment>
