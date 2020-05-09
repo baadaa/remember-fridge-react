@@ -33,8 +33,8 @@ class App extends React.Component {
   };
   openEditor = item => {
     this.setState({ editorOpen: true });
-    if (item.props) {
-      this.setState({ currentItem: item.props, editorMode: "Edit" });
+    if (item) {
+      this.setState({ currentItem: item, editorMode: "Edit" });
     } else {
       this.setState({ editorMode: "Add" });
     }
