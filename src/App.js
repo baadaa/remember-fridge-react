@@ -55,8 +55,11 @@ class App extends React.Component {
     const filteredList = this.state.foodItems.filter(
       foodItem => foodItem.id !== this.state.currentItem.id
     );
-    this.setState({ foodItems: filteredList });
-    this.closeEditor();
+    this.setState({
+      foodItems: filteredList,
+      editorOpen: false,
+      currentItem: this.blankItemState
+    });
   };
   saveChanges = () => {
     const beforeChange = this.state.foodItems;
@@ -66,8 +69,11 @@ class App extends React.Component {
         ? { ...item, ...changedResults }
         : item;
     });
-    this.setState({ foodItems: afterChange });
-    this.closeEditor();
+    this.setState({
+      foodItems: afterChange,
+      editorOpen: false,
+      currentItem: this.blankItemState
+    });
   };
   editDate = (date, targetId) => {
     const dateBeforeEdit = { ...this.state.currentItem };

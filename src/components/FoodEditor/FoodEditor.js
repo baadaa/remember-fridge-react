@@ -42,7 +42,7 @@ class FoodEditor extends React.Component {
     return (
       <div className={`${css.editorView} ${visible}`}>
         <div className={css.editorViewInner}>
-          <form className={css.editor}>
+          <form className={css.editor} onSubmit={e => e.preventDefault()}>
             <h2 onClick={this.closeEditor}>{this.props.editorMode} an item</h2>
             <div className={css.photo}>
               <label className={css.photoFile}>
@@ -111,12 +111,27 @@ class FoodEditor extends React.Component {
                 />
               </div>
             </div>
+            <div>
+              <button
+                style={{ background: "#333", color: "#FFF" }}
+                onClick={this.props.saveChanges}
+              >
+                Save
+              </button>
+              <button
+                style={{ background: "#333", color: "#FFF" }}
+                onClick={this.deleteItemFromEditor}
+              >
+                Remove
+              </button>
+              <button
+                style={{ background: "#333", color: "#FFF" }}
+                onClick={this.closeEditor}
+              >
+                Cancel
+              </button>
+            </div>
           </form>
-          <div>
-            <button onClick={this.props.saveChanges}>Save</button>
-            <button onClick={this.deleteItemFromEditor}>Remove</button>
-            <button onClick={this.closeEditor}>Cancel</button>
-          </div>
         </div>
       </div>
     );
