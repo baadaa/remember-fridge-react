@@ -12,7 +12,7 @@ class App extends React.Component {
     editorOpen: false,
     currentItem: null,
     foodItems: foodItems,
-    editorMode: ""
+    editorMode: "Hidden"
   };
   handleSectionChange = changeEvent => {
     this.setState({ selectedSection: changeEvent.target.value });
@@ -33,7 +33,11 @@ class App extends React.Component {
     document.body.classList.add("noscroll");
   };
   closeEditor = () => {
-    this.setState({ editorOpen: false, currentItem: null });
+    this.setState({
+      editorOpen: false,
+      currentItem: null,
+      editorMode: "Hidden"
+    });
     document.body.classList.remove("noscroll");
   };
   editDate = (date, targetId) => {
