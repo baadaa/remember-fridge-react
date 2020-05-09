@@ -16,6 +16,10 @@ class FoodEditor extends React.Component {
   onChangeDate = (selectedDates, dateStr, instance) => {
     this.props.editDate(dateStr, instance.element.id);
   };
+  deleteItemFromEditor = () => {
+    alert("delete?");
+    this.props.deleteItemFromEditor();
+  };
   componentDidMount() {
     flatpickr(this.addDatePicker.current, {
       onChange: this.onChangeDate,
@@ -28,7 +32,6 @@ class FoodEditor extends React.Component {
   }
   render() {
     const visible = this.props.open === false ? "" : css.open;
-
     const {
       img = blank,
       quantity = "",
@@ -109,6 +112,11 @@ class FoodEditor extends React.Component {
               </div>
             </div>
           </form>
+          <div>
+            <button onClick={this.props.saveChanges}>Save</button>
+            <button onClick={this.deleteItemFromEditor}>Remove</button>
+            <button onClick={this.closeEditor}>Cancel</button>
+          </div>
         </div>
       </div>
     );

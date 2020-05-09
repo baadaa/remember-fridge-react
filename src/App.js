@@ -20,8 +20,7 @@ class App extends React.Component {
     selectedSection: "fridge",
     editorOpen: false,
     currentItem: this.blankItemState,
-    foodItems: foodItems,
-    editorMode: "Hidden"
+    foodItems: foodItems
   };
   handleSectionChange = changeEvent => {
     this.setState({ selectedSection: changeEvent.target.value });
@@ -44,10 +43,27 @@ class App extends React.Component {
   closeEditor = () => {
     this.setState({
       editorOpen: false,
-      currentItem: this.blankItemState,
-      editorMode: "Hidden"
+      currentItem: this.blankItemState
     });
     document.body.classList.remove("noscroll");
+  };
+  deleteItemFromEditor = () => {
+    const filteredList = this.state.foodItems.filter(
+      foodItem => foodItem.id !== this.state.currentItem.id
+    );
+    this.setState({ foodItems: filteredList });
+    this.closeEditor();
+  };
+  saveChanges = () => {
+    const beforeChange = this.state.foodItems;
+    const changedResults = this.state.currentItem;
+    const afterChange = beforeChange.map(item => {
+      return item.id === this.state.currentItem.id
+        ? { ...item, ...changedResults }
+        : item;
+    });
+    this.setState({ foodItems: afterChange });
+    this.closeEditor();
   };
   editDate = (date, targetId) => {
     const dateBeforeEdit = { ...this.state.currentItem };
@@ -81,6 +97,8 @@ class App extends React.Component {
         currentItem={this.state.currentItem}
         editField={this.editField}
         editDate={this.editDate}
+        deleteItemFromEditor={this.deleteItemFromEditor}
+        saveChanges={this.saveChanges}
       />
       <Footer />
     </>
