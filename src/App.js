@@ -40,6 +40,10 @@ class App extends React.Component {
     }
     document.body.classList.add("noscroll");
   };
+  componentDidMount() {
+    // eslint-disable-next-line
+    (function(l){var i,s={touchend:function(){}};for(i in s)l.addEventListener(i,s)})(document); // sticky hover fix in iOS
+  }
   closeEditor = () => {
     this.setState({
       editorOpen: false,

@@ -1,6 +1,5 @@
 import React from "react";
 import addIcon from "../../img/added.svg";
-import closeIcon from "../../img/close.svg";
 import expireIcon from "../../img/expires.svg";
 import foodIcon from "../../img/food.svg";
 import css from "./FoodItem.module.scss";
@@ -72,12 +71,6 @@ class FoodItem extends React.Component {
                 Delete
               </button>
             </nav>
-            <img
-              src={closeIcon}
-              className={css.closeItem}
-              onClick={this.flip}
-              alt=""
-            />
             <div
               className={`${css.deleteConfirm} ${
                 this.state.deleting ? css.deleting : ""
