@@ -115,14 +115,13 @@ const takePhoto = (e, cb) => {
     photo = files[0];
     imgUrl = window.URL.createObjectURL(photo);
     getOrientation(photo, function(orientation) {
-      if (orientation === 1) {
-        cb(imgUrl);
-      } else {
-        console.log("???");
-        resetOrientation(imgUrl, orientation, function(resetBase64Image) {
-          cb(resetBase64Image);
-        });
-      }
+      // if (orientation === 1) {
+      // cb(imgUrl);
+      // } else {
+      resetOrientation(imgUrl, orientation, function(resetBase64Image) {
+        cb(resetBase64Image);
+      });
+      // }
     });
   }
 };
