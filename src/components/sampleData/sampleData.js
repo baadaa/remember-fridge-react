@@ -7,7 +7,7 @@ const itemList = [
     img: sampleImg,
     quantity: "1",
     name: "된장",
-    added: "Mar 20, 2019",
+    added: "Mar 15, 2018",
     expires: "Dec 29, 2021"
   },
   {
@@ -16,7 +16,6 @@ const itemList = [
     img: sampleImg2,
     quantity: "3 cartons",
     name: "된장",
-    added: null,
     expires: "Dec 29, 2021"
   },
   {

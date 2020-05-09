@@ -6,11 +6,20 @@ import Refrigerator from "./components/Refrigerator/Refrigerator";
 import foodItems from "./components/sampleData/sampleData";
 import FoodEditor from "./components/FoodEditor/FoodEditor";
 
+import blank from "./img/_.png";
+
 class App extends React.Component {
+  blankItemState = {
+    img: blank,
+    quantity: "",
+    name: "",
+    added: "",
+    expires: ""
+  };
   state = {
     selectedSection: "fridge",
     editorOpen: false,
-    currentItem: null,
+    currentItem: this.blankItemState,
     foodItems: foodItems,
     editorMode: "Hidden"
   };
@@ -35,7 +44,7 @@ class App extends React.Component {
   closeEditor = () => {
     this.setState({
       editorOpen: false,
-      currentItem: null,
+      currentItem: this.blankItemState,
       editorMode: "Hidden"
     });
     document.body.classList.remove("noscroll");
