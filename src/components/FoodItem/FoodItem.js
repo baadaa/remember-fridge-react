@@ -7,12 +7,7 @@ import css from "./FoodItem.module.scss";
 class FoodItem extends React.Component {
   state = {
     flipped: false,
-    deleting: false,
-    id: this.props.id,
-    name: this.props.name,
-    added: this.props.added,
-    expires: this.props.expires,
-    quantity: this.props.quantity
+    deleting: false
   };
   flip = () => {
     this.state.flipped
@@ -20,7 +15,7 @@ class FoodItem extends React.Component {
       : this.setState({ flipped: true, deleting: false });
   };
   deleteThis = () => {
-    this.props.deleteThis(this);
+    this.props.deleteThis(this.props.id);
   };
   deleteConfirm = () => {
     this.state.deleting
@@ -30,24 +25,24 @@ class FoodItem extends React.Component {
   render() {
     const flipClass = this.state.flipped ? css.flipped : "";
 
-    const name = this.state.name ? <h2>{this.state.name}</h2> : "";
-    const quantity = this.state.quantity ? (
-      <span className={css.quantity}>{this.state.quantity}</span>
+    const name = this.props.name ? <h2>{this.props.name}</h2> : "";
+    const quantity = this.props.quantity ? (
+      <span className={css.quantity}>{this.props.quantity}</span>
     ) : (
       ""
     );
-    const added = this.state.added ? (
+    const added = this.props.added ? (
       <div className={css.dates}>
         <img className={css.addedIcon} src={addIcon} alt="" />
-        {this.state.added}
+        {this.props.added}
       </div>
     ) : (
       ""
     );
-    const expires = this.state.expires ? (
+    const expires = this.props.expires ? (
       <div className={css.dates}>
         <img className={css.expireIcon} src={expireIcon} alt="" />
-        {this.state.expires}
+        {this.props.expires}
       </div>
     ) : (
       ""
@@ -60,7 +55,7 @@ class FoodItem extends React.Component {
             <img
               className={css.foodImg}
               src={this.props.img}
-              alt={this.state.name}
+              alt={this.props.name}
             />
             {name}
             {quantity}
@@ -71,7 +66,12 @@ class FoodItem extends React.Component {
             {added}
             {expires}
             <nav className={css.editBtns}>
-              <button className={css.edit}>Edit</button>
+              <button
+                className={css.edit}
+                onClick={() => this.props.editThis(this)}
+              >
+                Edit
+              </button>
               <button className={css.delete} onClick={this.deleteConfirm}>
                 Delete
               </button>

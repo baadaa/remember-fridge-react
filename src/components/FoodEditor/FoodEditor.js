@@ -13,12 +13,15 @@ class FoodEditor extends React.Component {
     this.addDatePicker = React.createRef();
     this.expDatePicker = React.createRef();
   }
-  click = () => {
-    this.props.click();
+  closeEditor = () => {
+    this.props.closeEditor();
   };
-  onChange(selectedDates, dateStr, instance) {
+  onChange = (selectedDates, dateStr, instance) => {
     console.log(selectedDates);
-  }
+  };
+  onChangeName = selectedName => {
+    console.log(selectedName.currentTarget.value);
+  };
   componentDidMount() {
     flatpickr(this.addDatePicker.current, {
       onChange: this.onChange
@@ -29,12 +32,15 @@ class FoodEditor extends React.Component {
   }
   render() {
     const visible = this.props.open === false ? "" : css.open;
-
+    const currentItem = this.props.currentItem || null;
+    // const { added, expires, id, img, name, quantity } = this.props.currentItem;
+    // console.log(this.props);
+    // console.log(img);
     return (
       <div className={`${css.editorView} ${visible}`}>
         <div className={css.editorViewInner}>
           <div className={css.editor}>
-            <h2 onClick={this.click}>Add an item</h2>
+            <h2 onClick={this.closeEditor}>{this.props.editorMode} an item</h2>
             <div className={css.photo}>
               <label className={css.photoFile}>
                 <input
@@ -44,7 +50,11 @@ class FoodEditor extends React.Component {
                   accept="image/*"
                   placeholder=""
                 />
-                <img src={blank} alt="" />
+                <img
+                  src={currentItem ? currentItem.img : blank}
+                  alt=""
+                  style={{ objectFit: "cover" }}
+                />
               </label>
             </div>
             <div className={css.fields}>
@@ -56,6 +66,8 @@ class FoodEditor extends React.Component {
                   name="i-name"
                   placeholder="Item name"
                   style={{ boxShadow: "none" }}
+                  value={currentItem ? currentItem.name : ""}
+                  onChange={this.onChangeName}
                 />
               </div>
               <div className={css.fieldLabel}>
@@ -65,6 +77,7 @@ class FoodEditor extends React.Component {
                   id="i-quantity"
                   name="i-quantity"
                   placeholder="Quantity"
+                  value={currentItem ? currentItem.quantity : ""}
                 />
               </div>
               <div className={css.fieldLabel} style={{ boxShadow: "none" }}>
