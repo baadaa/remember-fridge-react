@@ -6,6 +6,8 @@ import Refrigerator from "./components/Refrigerator/Refrigerator";
 import foodItems from "./components/sampleData/sampleData";
 import FoodEditor from "./components/FoodEditor/FoodEditor";
 
+import takePhotoUtil from "./components/TakePhoto";
+
 import blank from "./img/_.png";
 
 class App extends React.Component {
@@ -39,6 +41,14 @@ class App extends React.Component {
       this.setState({ editorMode: "Add" });
     }
     document.body.classList.add("noscroll");
+  };
+  takePhoto = e => {
+    const itemBeforePhoto = this.state.currentItem;
+    const updatePhoto = photo => {
+      const itemWithNewPhoto = { ...itemBeforePhoto, img: photo };
+      this.setState({ currentItem: itemWithNewPhoto });
+    };
+    takePhotoUtil(e, updatePhoto);
   };
   componentDidMount() {
     // eslint-disable-next-line
@@ -106,6 +116,7 @@ class App extends React.Component {
         editorMode={this.state.editorMode}
         currentItem={this.state.currentItem}
         editField={this.editField}
+        takePhoto={this.takePhoto}
         editDate={this.editDate}
         deleteItemFromEditor={this.deleteItemFromEditor}
         saveChanges={this.saveChanges}

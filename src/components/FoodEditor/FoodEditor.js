@@ -52,6 +52,7 @@ class FoodEditor extends React.Component {
                   name="img"
                   accept="image/*"
                   placeholder=""
+                  onChange={this.props.takePhoto}
                 />
                 <img src={img} alt="" />
               </label>
