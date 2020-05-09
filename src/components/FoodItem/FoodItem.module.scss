@@ -55,7 +55,8 @@
     }
   }
 
-  &.flipped {
+  &.flipped,
+  &:hover {
     .flipper {
       transform: rotateY(180deg);
     }

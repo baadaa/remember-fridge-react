@@ -7,13 +7,7 @@ import css from "./FoodItem.module.scss";
 
 class FoodItem extends React.Component {
   state = {
-    flipped: false,
     deleting: false
-  };
-  flip = () => {
-    this.state.flipped
-      ? this.setState({ flipped: false, deleting: false })
-      : this.setState({ flipped: true, deleting: false });
   };
   deleteThis = () => {
     this.props.deleteThis(this.props.id);
@@ -23,9 +17,10 @@ class FoodItem extends React.Component {
       ? this.setState({ deleting: false })
       : this.setState({ deleting: true });
   };
+  cancelModal = () => {
+    this.setState({ deleting: false });
+  };
   render() {
-    const flipClass = this.state.flipped ? css.flipped : "";
-
     const name = this.props.name ? <h2>{this.props.name}</h2> : "";
     const quantity = this.props.quantity ? (
       <span className={css.quantity}>{this.props.quantity}</span>
@@ -50,9 +45,9 @@ class FoodItem extends React.Component {
     );
 
     return (
-      <article className={`${css.food} ${flipClass}`}>
-        <div className={css.flipper}>
-          <div className={css.front} onClick={this.flip}>
+      <article className={css.food}>
+        <div className={css.flipper} onMouseLeave={this.cancelModal}>
+          <div className={css.front}>
             <img
               className={css.foodImg}
               src={this.props.img || foodIcon}
