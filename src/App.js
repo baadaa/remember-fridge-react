@@ -36,6 +36,18 @@ class App extends React.Component {
     this.setState({ editorOpen: false, currentItem: null });
     document.body.classList.remove("noscroll");
   };
+  editDate = (date, targetId) => {
+    const dateBeforeEdit = { ...this.state.currentItem };
+    const afterEdit = { ...dateBeforeEdit, [targetId]: date };
+    this.setState({ currentItem: afterEdit });
+  };
+  editField = item => {
+    const targetId = item.currentTarget.id;
+    const newValue = item.currentTarget.value;
+    const itemBeforeEdit = { ...this.state.currentItem };
+    const afterEdit = { ...itemBeforeEdit, [targetId]: newValue };
+    this.setState({ currentItem: afterEdit });
+  };
   render = () => (
     <>
       <Header
@@ -54,6 +66,8 @@ class App extends React.Component {
         closeEditor={this.closeEditor}
         editorMode={this.state.editorMode}
         currentItem={this.state.currentItem}
+        editField={this.editField}
+        editDate={this.editDate}
       />
       <Footer />
     </>

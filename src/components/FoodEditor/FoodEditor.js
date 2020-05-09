@@ -17,25 +17,21 @@ class FoodEditor extends React.Component {
     this.props.closeEditor();
   };
   onChange = (selectedDates, dateStr, instance) => {
-    console.log(selectedDates);
-  };
-  onChangeName = selectedName => {
-    console.log(selectedName.currentTarget.value);
+    this.props.editDate(dateStr, instance.element.id);
   };
   componentDidMount() {
     flatpickr(this.addDatePicker.current, {
-      onChange: this.onChange
+      onChange: this.onChange,
+      dateFormat: "F j, Y"
     });
     flatpickr(this.expDatePicker.current, {
-      onChange: this.onChange
+      onChange: this.onChange,
+      dateFormat: "F j, Y"
     });
   }
   render() {
     const visible = this.props.open === false ? "" : css.open;
     const currentItem = this.props.currentItem || null;
-    // const { added, expires, id, img, name, quantity } = this.props.currentItem;
-    // console.log(this.props);
-    // console.log(img);
     return (
       <div className={`${css.editorView} ${visible}`}>
         <div className={css.editorViewInner}>
@@ -45,16 +41,12 @@ class FoodEditor extends React.Component {
               <label className={css.photoFile}>
                 <input
                   type="file"
-                  id="i-image"
-                  name="i-image"
+                  id="img"
+                  name="img"
                   accept="image/*"
                   placeholder=""
                 />
-                <img
-                  src={currentItem ? currentItem.img : blank}
-                  alt=""
-                  style={{ objectFit: "cover" }}
-                />
+                <img src={currentItem ? currentItem.img : blank} alt="" />
               </label>
             </div>
             <div className={css.fields}>
@@ -62,21 +54,22 @@ class FoodEditor extends React.Component {
                 Item name<span className="req">*</span>
                 <input
                   type="text"
-                  id="i-name"
-                  name="i-name"
+                  id="name"
+                  name="name"
                   placeholder="Item name"
                   style={{ boxShadow: "none" }}
                   value={currentItem ? currentItem.name : ""}
-                  onChange={this.onChangeName}
+                  onChange={this.props.editField}
                 />
               </div>
               <div className={css.fieldLabel}>
                 Quantity
                 <input
                   type="text"
-                  id="i-quantity"
-                  name="i-quantity"
+                  id="quantity"
+                  name="quantity"
                   placeholder="Quantity"
+                  onChange={this.props.editField}
                   value={currentItem ? currentItem.quantity : ""}
                 />
               </div>
@@ -84,18 +77,21 @@ class FoodEditor extends React.Component {
                 Added Date<span className="req">*</span>
                 {/* <input
                   type="hidden"
-                  id="i-date"
-                  name="i-date"
+                  id="date"
+                  name="date"
                   placeholder="Sep 5, 2019"
                   className="flatpickr-input"
                   value=""
+                  onChange={this.props.editField}
                   ref={this.datePicker}
                 /> */}
                 <input
                   className="flatpickr-input form-control input"
                   placeholder="Sep 5, 2019"
                   type="text"
-                  readOnly="readonly"
+                  id="added"
+                  name="added"
+                  // readOnly="readonly"
                   ref={this.addDatePicker}
                 />
               </div>
@@ -113,7 +109,9 @@ class FoodEditor extends React.Component {
                   className="flatpickr-input form-control input"
                   placeholder=""
                   type="text"
-                  readOnly="readonly"
+                  id="expires"
+                  name="expires"
+                  // readOnly="readonly"
                   ref={this.expDatePicker}
                 />
               </div>
