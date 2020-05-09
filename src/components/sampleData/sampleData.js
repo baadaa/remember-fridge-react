@@ -16,6 +16,7 @@ const itemList = [
     img: sampleImg2,
     quantity: "3 cartons",
     name: "된장",
+    added: null,
     expires: "Dec 29, 2021"
   },
   {
@@ -38,7 +39,7 @@ const itemList = [
   {
     category: "fridge",
     id: "e341",
-    img: sampleImg,
+    img: undefined,
     quantity: "53",
     name: "Sausage",
     added: "Mar 20, 2019",

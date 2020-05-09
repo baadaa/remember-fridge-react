@@ -2,6 +2,7 @@ import React from "react";
 import addIcon from "../../img/added.svg";
 import closeIcon from "../../img/close.svg";
 import expireIcon from "../../img/expires.svg";
+import foodIcon from "../../img/food.svg";
 import css from "./FoodItem.module.scss";
 
 class FoodItem extends React.Component {
@@ -54,7 +55,7 @@ class FoodItem extends React.Component {
           <div className={css.front} onClick={this.flip}>
             <img
               className={css.foodImg}
-              src={this.props.img}
+              src={this.props.img || foodIcon}
               alt={this.props.name}
             />
             {name}

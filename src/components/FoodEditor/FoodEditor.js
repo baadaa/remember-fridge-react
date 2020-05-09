@@ -2,22 +2,23 @@ import React from "react";
 import "../../styles/flatpick.scss";
 import flatpickr from "flatpickr";
 import blank from "../../img/_.png";
+import foodIcon from "../../img/food.svg";
 // import closeIcon from "../img/close.svg";
 // import expireIcon from "../img/expires.svg";
 // import ColorPalette from "./ColorPalette";
 import css from "./FoodEditor.module.scss";
 
 class FoodEditor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.addDatePicker = React.createRef();
-    this.expDatePicker = React.createRef();
-  }
+  addDatePicker = React.createRef();
+  expDatePicker = React.createRef();
   closeEditor = () => {
     this.props.closeEditor();
   };
   onChange = (selectedDates, dateStr, instance) => {
     this.props.editDate(dateStr, instance.element.id);
+  };
+  clean = e => {
+    e.preventDefault();
   };
   componentDidMount() {
     flatpickr(this.addDatePicker.current, {
@@ -31,11 +32,25 @@ class FoodEditor extends React.Component {
   }
   render() {
     const visible = this.props.open === false ? "" : css.open;
-    const currentItem = this.props.currentItem || null;
+    const itemValues = {
+      img: blank,
+      quantity: "",
+      name: "",
+      added: "",
+      expires: ""
+    };
+
+    if (this.props.editorMode === "Edit") {
+      itemValues.img = this.props.currentItem.img || foodIcon;
+      itemValues.quantity = this.props.currentItem.quantity || "";
+      itemValues.name = this.props.currentItem.name || "";
+      itemValues.added = this.props.currentItem.added || "";
+      itemValues.expires = this.props.currentItem.expires || "";
+    }
     return (
       <div className={`${css.editorView} ${visible}`}>
         <div className={css.editorViewInner}>
-          <div className={css.editor}>
+          <form className={css.editor}>
             <h2 onClick={this.closeEditor}>{this.props.editorMode} an item</h2>
             <div className={css.photo}>
               <label className={css.photoFile}>
@@ -46,7 +61,7 @@ class FoodEditor extends React.Component {
                   accept="image/*"
                   placeholder=""
                 />
-                <img src={currentItem ? currentItem.img : blank} alt="" />
+                <img src={itemValues.img} alt="" />
               </label>
             </div>
             <div className={css.fields}>
@@ -58,7 +73,7 @@ class FoodEditor extends React.Component {
                   name="name"
                   placeholder="Item name"
                   style={{ boxShadow: "none" }}
-                  value={currentItem ? currentItem.name : ""}
+                  value={itemValues.name}
                   onChange={this.props.editField}
                 />
               </div>
@@ -70,7 +85,7 @@ class FoodEditor extends React.Component {
                   name="quantity"
                   placeholder="Quantity"
                   onChange={this.props.editField}
-                  value={currentItem ? currentItem.quantity : ""}
+                  value={itemValues.quantity}
                 />
               </div>
               <div className={css.fieldLabel} style={{ boxShadow: "none" }}>
@@ -87,11 +102,12 @@ class FoodEditor extends React.Component {
                 /> */}
                 <input
                   className="flatpickr-input form-control input"
-                  placeholder="Sep 5, 2019"
+                  placeholder="Added date"
                   type="text"
                   id="added"
                   name="added"
-                  // readOnly="readonly"
+                  defaultValue={itemValues.added}
+                  // onChange={this.onChange}
                   ref={this.addDatePicker}
                 />
               </div>
@@ -107,16 +123,18 @@ class FoodEditor extends React.Component {
                 /> */}
                 <input
                   className="flatpickr-input form-control input"
-                  placeholder=""
+                  placeholder="Expiring date"
                   type="text"
                   id="expires"
                   name="expires"
+                  defaultValue={itemValues.expires}
                   // readOnly="readonly"
                   ref={this.expDatePicker}
+                  // onChange={this.onChange}
                 />
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     );
