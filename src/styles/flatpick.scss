@@ -708,3 +708,13 @@ span.flatpickr-weekday {
 .flatpickr-current-month {
   font-weight: 700;
 }
+
+// Added tweaks
+
+.flatpickr-month {
+  pointer-events: none;
+}
+
+.flatpickr-current-month {
+  pointer-events: all;
+}
