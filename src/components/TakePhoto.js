@@ -40,7 +40,7 @@ const resetOrientation = (srcBase64, srcOrientation, callback) => {
   img.onload = function() {
     let width = img.width,
       height = img.height,
-      max_size = 544,
+      max_size = 400,
       canvas = document.createElement("canvas"),
       ctx = canvas.getContext("2d");
 
