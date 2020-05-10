@@ -28,8 +28,7 @@ class App extends React.Component {
   handleSectionChange = changeEvent => {
     const selectedTarget = changeEvent.target.value;
     this.setState({ selectedSection: selectedTarget }, () => {
-      document.body.style.backgroundColor =
-        selectedTarget === "freezer" ? "#333" : "";
+      document.body.className = `${selectedTarget}Section`;
     });
   };
   deleteItem = itemId => {

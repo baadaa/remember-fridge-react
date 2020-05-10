@@ -21,8 +21,16 @@ body {
   font-size: 16px;
   font-weight: 400;
   line-height: 1.4;
-
   overflow-x: hidden;
+  transition: all 1s;
+}
+
+.freezerSection {
+  background-color: #999;
+}
+
+.fridgeSection {
+  background-color: #f4f4f4;
 }
 
 #root {
