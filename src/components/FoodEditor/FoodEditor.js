@@ -32,9 +32,8 @@ class FoodEditor extends React.Component {
   }
   render() {
     const visible = this.props.open === false ? "" : css.open;
-    console.log(this.props.currentItem.img);
     const {
-      img = blank,
+      img = "",
       quantity = "",
       name = "",
       added = "",
@@ -55,7 +54,7 @@ class FoodEditor extends React.Component {
                   placeholder=""
                   onChange={this.props.takePhoto}
                 />
-                <img src={img} alt="" />
+                <img src={img === "" ? blank : img} alt="" />
               </label>
             </div>
             <div className={css.fields}>

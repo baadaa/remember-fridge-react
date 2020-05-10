@@ -12,12 +12,13 @@
   color: #fff;
   align-items: center;
   justify-content: center;
-  opacity: 1;
+  opacity: 0;
   transform: translateX(100vw);
-  transition: transform 0.3s;
+  transition: transform 0.3s, opacity .3s;
 
   &.open {
     transform: translateX(0);
+    opacity: 1;
   }
 }
 
@@ -36,7 +37,6 @@
   width: 600px;
   overflow-y: auto;
   text-align: center;
-  border: 1px solid red;
 
   .photoFile {
     cursor: pointer;

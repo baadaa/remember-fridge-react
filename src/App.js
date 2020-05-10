@@ -8,11 +8,9 @@ import FoodEditor from "./components/FoodEditor/FoodEditor";
 
 import takePhotoUtil from "./components/TakePhoto";
 
-import blank from "./img/_.png";
-
 class App extends React.Component {
   blankItemState = {
-    img: blank,
+    img: "",
     quantity: "",
     name: "",
     added: "",
@@ -35,7 +33,9 @@ class App extends React.Component {
     const filteredList = this.state.foodItems.filter(
       foodItem => foodItem.id !== itemId
     );
-    this.setState({ foodItems: filteredList });
+    this.setState({ foodItems: filteredList }, () => {
+      this.setLocalStorage();
+    });
   };
   openEditor = item => {
     this.setState({ editorOpen: true });
@@ -54,9 +54,26 @@ class App extends React.Component {
     };
     takePhotoUtil(e, updatePhoto);
   };
+  setLocalStorage = () => {
+    window.localStorage.setItem(
+      "myFridgeItems",
+      JSON.stringify(this.state.foodItems)
+    );
+  };
+  localStorageIsAvailable = () => {
+    return window.localStorage.getItem("myFridgeItems") ? true : false;
+  };
   componentDidMount() {
     // eslint-disable-next-line
     (function(l){var i,s={touchend:function(){}};for(i in s)l.addEventListener(i,s)})(document); // sticky hover fix in iOS
+
+    if (this.localStorageIsAvailable()) {
+      this.setState({
+        foodItems: JSON.parse(window.localStorage.getItem("myFridgeItems"))
+      });
+    } else {
+      this.setLocalStorage();
+    }
   }
   closeEditor = () => {
     this.setState({
@@ -85,11 +102,16 @@ class App extends React.Component {
         id: new Date().toString()
       }
     ];
-    this.setState({
-      foodItems: newList,
-      editorOpen: false,
-      currentItem: this.blankItemState
-    });
+    this.setState(
+      {
+        foodItems: newList,
+        editorOpen: false,
+        currentItem: this.blankItemState
+      },
+      () => {
+        this.setLocalStorage();
+      }
+    );
   };
   saveChanges = () => {
     const beforeChange = this.state.foodItems;
