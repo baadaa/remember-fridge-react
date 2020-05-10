@@ -30,20 +30,22 @@ const Container = styled.main`
 
 const Refrigerator = props => (
   <Container>
-    <AddFood click={props.openEditor} />
-    {props.foodItems.map((item, i) => (
-      <FoodItem
-        key={item.id}
-        id={item.id}
-        img={item.img}
-        quantity={item.quantity}
-        name={item.name}
-        added={item.added}
-        expires={item.expires}
-        deleteThis={props.deleteItem}
-        editThis={props.openEditor}
-      />
-    ))}
+    <AddFood category={props.category} click={props.openEditor} />
+    {props.foodItems
+      .filter(food => food.category === props.category)
+      .map((item, i) => (
+        <FoodItem
+          key={item.id}
+          id={item.id}
+          img={item.img}
+          quantity={item.quantity}
+          name={item.name}
+          added={item.added}
+          expires={item.expires}
+          deleteThis={props.deleteItem}
+          editThis={props.openEditor}
+        />
+      ))}
   </Container>
 );
 

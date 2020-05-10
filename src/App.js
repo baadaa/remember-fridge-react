@@ -26,7 +26,11 @@ class App extends React.Component {
     editorMode: "Add"
   };
   handleSectionChange = changeEvent => {
-    this.setState({ selectedSection: changeEvent.target.value });
+    const selectedTarget = changeEvent.target.value;
+    this.setState({ selectedSection: selectedTarget }, () => {
+      document.body.style.backgroundColor =
+        selectedTarget === "freezer" ? "#333" : "";
+    });
   };
   deleteItem = itemId => {
     const filteredList = this.state.foodItems.filter(
@@ -121,9 +125,8 @@ class App extends React.Component {
         change={this.handleSectionChange}
       />
       <Refrigerator
-        foodItems={this.state.foodItems.filter(
-          food => food.category === "fridge"
-        )}
+        foodItems={this.state.foodItems}
+        category={this.state.selectedSection}
         openEditor={this.openEditor}
         deleteItem={this.deleteItem}
       />

@@ -8,7 +8,7 @@ const AddFood = props => (
       <span className={css.text}>
         Add an item
         <br />
-        to Fridge
+        to <span style={{ textTransform: "capitalize" }}>{props.category}</span>
       </span>
     </button>
   </div>
