@@ -3,7 +3,7 @@
 .editorView {
   position: absolute;
   z-index: 3;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.9);
   top: 0;
   left: 0;
   width: 100%;
@@ -40,7 +40,7 @@
 
   .photoFile {
     cursor: pointer;
-    height: 200px;
+    height: 223px;
 
     input[type="file"] {
       position: fixed;
@@ -81,8 +81,8 @@
     justify-content: center;
 
     img {
-      width: 200px;
-      height: 200px;
+      width: 223px;
+      height: 223px;
       object-fit: cover;
     }
 
