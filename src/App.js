@@ -3,7 +3,7 @@ import React from "react";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Refrigerator from "./components/Refrigerator/Refrigerator";
-import foodItems from "./components/sampleData/sampleData";
+// import foodItems from "./components/sampleData/sampleData";
 import FoodEditor from "./components/FoodEditor/FoodEditor";
 
 import takePhotoUtil from "./components/TakePhoto";
@@ -20,7 +20,7 @@ class App extends React.Component {
     selectedSection: "fridge",
     editorOpen: false,
     currentItem: this.blankItemState,
-    foodItems: foodItems,
+    foodItems: [],
     editorMode: "Add"
   };
   handleSectionChange = changeEvent => {
@@ -86,11 +86,16 @@ class App extends React.Component {
     const filteredList = this.state.foodItems.filter(
       foodItem => foodItem.id !== this.state.currentItem.id
     );
-    this.setState({
-      foodItems: filteredList,
-      editorOpen: false,
-      currentItem: this.blankItemState
-    });
+    this.setState(
+      {
+        foodItems: filteredList,
+        editorOpen: false,
+        currentItem: this.blankItemState
+      },
+      () => {
+        this.setLocalStorage();
+      }
+    );
   };
   addNewItem = () => {
     const oldList = this.state.foodItems;
@@ -121,11 +126,16 @@ class App extends React.Component {
         ? { ...item, ...changedResults }
         : item;
     });
-    this.setState({
-      foodItems: afterChange,
-      editorOpen: false,
-      currentItem: this.blankItemState
-    });
+    this.setState(
+      {
+        foodItems: afterChange,
+        editorOpen: false,
+        currentItem: this.blankItemState
+      },
+      () => {
+        this.setLocalStorage();
+      }
+    );
   };
   editDate = (date, targetId) => {
     const dateBeforeEdit = { ...this.state.currentItem };
