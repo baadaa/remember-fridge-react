@@ -32,6 +32,7 @@ class FoodEditor extends React.Component {
   }
   render() {
     const visible = this.props.open === false ? "" : css.open;
+    console.log(this.props.currentItem.img);
     const {
       img = blank,
       quantity = "",
@@ -112,7 +113,11 @@ class FoodEditor extends React.Component {
                 />
               </div>
             </div>
-            <div>
+            <div
+              style={{
+                display: this.props.editorMode === "Edit" ? "block" : "none"
+              }}
+            >
               <button
                 style={{ background: "#333", color: "#FFF" }}
                 onClick={this.props.saveChanges}
@@ -124,6 +129,24 @@ class FoodEditor extends React.Component {
                 onClick={this.deleteItemFromEditor}
               >
                 Remove
+              </button>
+              <button
+                style={{ background: "#333", color: "#FFF" }}
+                onClick={this.closeEditor}
+              >
+                Cancel
+              </button>
+            </div>
+            <div
+              style={{
+                display: this.props.editorMode === "Add" ? "block" : "none"
+              }}
+            >
+              <button
+                style={{ background: "#333", color: "#FFF" }}
+                onClick={this.props.addNewItem}
+              >
+                Add item
               </button>
               <button
                 style={{ background: "#333", color: "#FFF" }}

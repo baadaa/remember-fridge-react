@@ -100,7 +100,6 @@ const resetOrientation = (srcBase64, srcOrientation, callback) => {
 
     // export base64
     callback(canvas.toDataURL("image/jpeg", 0.5));
-    // return canvas.toDataURL("image/jpeg", 0.5);
   };
 
   img.src = srcBase64;

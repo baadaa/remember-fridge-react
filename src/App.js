@@ -22,7 +22,8 @@ class App extends React.Component {
     selectedSection: "fridge",
     editorOpen: false,
     currentItem: this.blankItemState,
-    foodItems: foodItems
+    foodItems: foodItems,
+    editorMode: "Add"
   };
   handleSectionChange = changeEvent => {
     this.setState({ selectedSection: changeEvent.target.value });
@@ -35,7 +36,7 @@ class App extends React.Component {
   };
   openEditor = item => {
     this.setState({ editorOpen: true });
-    if (item) {
+    if (item.id) {
       this.setState({ currentItem: item, editorMode: "Edit" });
     } else {
       this.setState({ editorMode: "Add" });
@@ -67,6 +68,22 @@ class App extends React.Component {
     );
     this.setState({
       foodItems: filteredList,
+      editorOpen: false,
+      currentItem: this.blankItemState
+    });
+  };
+  addNewItem = () => {
+    const oldList = this.state.foodItems;
+    const newList = [
+      ...oldList,
+      {
+        ...this.state.currentItem,
+        category: this.state.selectedSection,
+        id: new Date().toString()
+      }
+    ];
+    this.setState({
+      foodItems: newList,
       editorOpen: false,
       currentItem: this.blankItemState
     });
@@ -120,6 +137,7 @@ class App extends React.Component {
         editDate={this.editDate}
         deleteItemFromEditor={this.deleteItemFromEditor}
         saveChanges={this.saveChanges}
+        addNewItem={this.addNewItem}
       />
       <Footer />
     </>
