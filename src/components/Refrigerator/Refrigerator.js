@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import FoodItem from "../FoodItem/FoodItem";
 import AddFood from "../AddFood/AddFood";
 
