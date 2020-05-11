@@ -7,29 +7,22 @@ body {
   margin: 0;
   position: relative;
   background: #f4f4f4;
-  // display: flex;
-  // flex-wrap: wrap;
-  // align-content: flex-start;
-  // justify-content: center;
-  // background-image: url('../img/pat.png');
-  // background-image: url('../img/pat-2.png');
-  // transition: .5s;
-  // -webkit-font-smoothing: antialiased;
-  // -moz-osx-font-smoothing: grayscale;
   color: #222;
   font-family: 'Raleway', sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.4;
   overflow-x: hidden;
-  transition: all 1s;
+  transition: all .5s;
 }
 
 .freezerSection {
   background-color: #999;
+  background-image: url('../img/pat-2.png');
 }
 
 .fridgeSection {
+  background-image: url('../img/pat.png');
   background-color: #f4f4f4;
 }
 
