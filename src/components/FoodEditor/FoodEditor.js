@@ -174,24 +174,27 @@ const TextField = ({ labelText, id, value, editField, isRequired }) => (
   </FieldItem>
 );
 
-const DateField = ({ labelText, id, value, isRequired, ref }) => (
-  <FieldItem>
-    <label htmlFor={id}>{labelText}</label>
-    <span className="req" style={{ display: !isRequired ? "none" : "" }}>
-      *
-    </span>
-    <input
-      className="flatpickr-input form-control input"
-      placeholder={labelText}
-      type="text"
-      id={id}
-      name={id}
-      value={value}
-      readOnly="readonly"
-      ref={ref}
-    />
-  </FieldItem>
-);
+const DateField = React.forwardRef((props, ref) => {
+  const { labelText, id, value, isRequired } = props;
+  return (
+    <FieldItem>
+      <label htmlFor={id}>{labelText}</label>
+      <span className="req" style={{ display: !isRequired ? "none" : "" }}>
+        *
+      </span>
+      <input
+        className="flatpickr-input form-control input"
+        placeholder={labelText}
+        type="text"
+        id={id}
+        name={id}
+        value={value}
+        readOnly="readonly"
+        ref={ref}
+      />
+    </FieldItem>
+  );
+});
 
 class FoodEditor extends React.Component {
   addDatePicker = React.createRef();
@@ -251,41 +254,20 @@ class FoodEditor extends React.Component {
               editField={editField}
               value={quantity}
             />
-            {/* <DateField
+            <DateField
               id="added"
               labelText="Added date"
               isRequired={true}
               value={added}
               ref={this.addDatePicker}
-            /> */}
-            <FieldItem>
-              <label htmlFor="added">
-                Added Date<span className="req">*</span>
-              </label>
-              <input
-                className="flatpickr-input form-control input"
-                placeholder="Added date"
-                type="text"
-                id="added"
-                name="added"
-                value={added}
-                readOnly="readonly"
-                ref={this.addDatePicker}
-              />
-            </FieldItem>
-            <FieldItem>
-              <label htmlFor="expires">Expiration Date (optional)</label>
-              <input
-                className="flatpickr-input form-control input"
-                placeholder="Expiring date"
-                type="text"
-                id="expires"
-                name="expires"
-                value={expires}
-                readOnly="readonly"
-                ref={this.expDatePicker}
-              />
-            </FieldItem>
+            />
+            <DateField
+              id="expires"
+              labelText="Expiration date (optional)"
+              isRequired={true}
+              value={expires}
+              ref={this.expDatePicker}
+            />
           </Fields>
           <div
             style={{
