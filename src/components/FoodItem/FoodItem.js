@@ -4,7 +4,7 @@ import expireIcon from "../../img/expires.svg";
 import foodIcon from "../../img/food.svg";
 import css from "./FoodItem.module.scss";
 
-const FoodItem2 = props => {
+const FoodItem = props => {
   const [deleteModal, setDeleteModal] = useState(false);
   const deleteThis = () => {
     props.deleteThis(props.id);
@@ -85,4 +85,4 @@ const FoodItem2 = props => {
   );
 };
 
-export default FoodItem2;
+export default FoodItem;
