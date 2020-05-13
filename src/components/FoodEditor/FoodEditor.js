@@ -228,7 +228,7 @@ class FoodEditor extends React.Component {
         added = "",
         expires = ""
       },
-      open: isOpen,
+      isOpen,
       editorMode,
       takePhoto,
       editField,

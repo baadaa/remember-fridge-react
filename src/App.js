@@ -18,7 +18,7 @@ class App extends React.Component {
   };
   state = {
     selectedSection: "fridge",
-    editorOpen: false,
+    editorIsOpen: false,
     currentItem: this.blankItemState,
     foodItems: [],
     editorMode: "Add"
@@ -38,7 +38,7 @@ class App extends React.Component {
     });
   };
   openEditor = item => {
-    this.setState({ editorOpen: true });
+    this.setState({ editorIsOpen: true });
     if (item.id) {
       this.setState({ currentItem: item, editorMode: "Edit" });
     } else {
@@ -78,7 +78,7 @@ class App extends React.Component {
   }
   closeEditor = () => {
     this.setState({
-      editorOpen: false,
+      editorIsOpen: false,
       currentItem: this.blankItemState
     });
     document.body.classList.remove("noscroll");
@@ -90,7 +90,7 @@ class App extends React.Component {
     this.setState(
       {
         foodItems: filteredList,
-        editorOpen: false,
+        editorIsOpen: false,
         currentItem: this.blankItemState
       },
       () => {
@@ -111,7 +111,7 @@ class App extends React.Component {
     this.setState(
       {
         foodItems: newList,
-        editorOpen: false,
+        editorIsOpen: false,
         currentItem: this.blankItemState
       },
       () => {
@@ -130,7 +130,7 @@ class App extends React.Component {
     this.setState(
       {
         foodItems: afterChange,
-        editorOpen: false,
+        editorIsOpen: false,
         currentItem: this.blankItemState
       },
       () => {
@@ -163,7 +163,7 @@ class App extends React.Component {
         deleteItem={this.deleteItem}
       />
       <FoodEditor
-        open={this.state.editorOpen}
+        isOpen={this.state.editorIsOpen}
         closeEditor={this.closeEditor}
         editorMode={this.state.editorMode}
         currentItem={this.state.currentItem}
