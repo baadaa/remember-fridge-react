@@ -24,7 +24,7 @@ class App extends React.Component {
     settingsIsOpen: false,
     currentItem: this.blankItemState,
     foodItems: [],
-    editorMode: "Add"
+    editorMode: "add"
   };
   handleSectionChange = changeEvent => {
     const selectedTarget = changeEvent.target.value;
@@ -43,9 +43,9 @@ class App extends React.Component {
   openEditor = item => {
     this.setState({ editorIsOpen: true });
     if (item.id) {
-      this.setState({ currentItem: item, editorMode: "Edit" });
+      this.setState({ currentItem: item, editorMode: "edit" });
     } else {
-      this.setState({ editorMode: "Add" });
+      this.setState({ editorMode: "add" });
     }
     document.body.classList.add("noscroll");
   };

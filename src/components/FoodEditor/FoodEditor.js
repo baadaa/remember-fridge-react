@@ -105,6 +105,9 @@ const Form = styled.form`
     width: 100%;
     margin: 0;
     margin-bottom: 0.6em;
+    span {
+      text-transform: capitalize;
+    }
   }
   @media screen and (max-width: 456px) {
     flex-direction: column;
@@ -113,7 +116,9 @@ const Form = styled.form`
 
 const EditorForm = ({ editorMode, children }) => (
   <Form onSubmit={e => e.preventDefault()}>
-    <h2>{editorMode} an item</h2>
+    <h2>
+      <span>{editorMode}</span> an item
+    </h2>
     {children}
   </Form>
 );
@@ -271,7 +276,7 @@ class FoodEditor extends React.Component {
           </Fields>
           <div
             style={{
-              display: editorMode === "Edit" ? "block" : "none"
+              display: editorMode === "edit" ? "block" : "none"
             }}
           >
             <button
@@ -295,7 +300,7 @@ class FoodEditor extends React.Component {
           </div>
           <div
             style={{
-              display: editorMode === "Add" ? "block" : "none"
+              display: editorMode === "add" ? "block" : "none"
             }}
           >
             <button
