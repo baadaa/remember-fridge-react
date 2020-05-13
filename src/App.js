@@ -74,6 +74,7 @@ class App extends React.Component {
     } else {
       this.setLocalStorage();
     }
+    document.body.className = `${this.state.selectedSection}Section`;
   }
   closeEditor = () => {
     this.setState({
