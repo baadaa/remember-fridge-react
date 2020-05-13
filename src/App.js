@@ -5,6 +5,7 @@ import Footer from "./components/Footer/Footer";
 import Refrigerator from "./components/Refrigerator/Refrigerator";
 // import foodItems from "./components/sampleData/sampleData";
 import FoodEditor from "./components/FoodEditor/FoodEditor";
+import SettingsModal from "./components/SettingsModal/SettingsModal";
 
 import takePhotoUtil from "./components/TakePhoto";
 
@@ -18,6 +19,7 @@ class App extends React.Component {
   };
   state = {
     selectedSection: "fridge",
+    darkMode: false,
     editorIsOpen: false,
     settingsIsOpen: false,
     currentItem: this.blankItemState,
@@ -27,7 +29,7 @@ class App extends React.Component {
   handleSectionChange = changeEvent => {
     const selectedTarget = changeEvent.target.value;
     this.setState({ selectedSection: selectedTarget }, () => {
-      document.body.className = `${selectedTarget}Section`;
+      document.body.id = `${selectedTarget}Section`;
     });
   };
   deleteItem = itemId => {
@@ -75,7 +77,11 @@ class App extends React.Component {
     } else {
       this.setLocalStorage();
     }
-    document.body.className = `${this.state.selectedSection}Section`;
+    document.body.id = `${this.state.selectedSection}Section`;
+
+    document.body.className = `${
+      this.state.darkMode ? "darkMode" : "lightMode"
+    }`;
   }
   closeEditor = () => {
     this.setState({
@@ -151,6 +157,14 @@ class App extends React.Component {
     const afterEdit = { ...itemBeforeEdit, [targetId]: newValue };
     this.setState({ currentItem: afterEdit });
   };
+  toggleDarkMode = () => {
+    const currentMode = this.state.darkMode;
+    this.setState({ darkMode: !currentMode }, () => {
+      document.body.className = `${
+        this.state.darkMode ? "darkMode" : "lightMode"
+      }`;
+    });
+  };
   toggleSettings = () => {
     const isOpen = this.state.settingsIsOpen;
     this.setState({ settingsIsOpen: !isOpen });
@@ -179,6 +193,12 @@ class App extends React.Component {
         deleteItemFromEditor={this.deleteItemFromEditor}
         saveChanges={this.saveChanges}
         addNewItem={this.addNewItem}
+      />
+      <SettingsModal
+        isOpen={this.state.settingsIsOpen}
+        closeModal={this.toggleSettings}
+        darkMode={this.state.darkMode}
+        changeColor={this.toggleDarkMode}
       />
       <Footer />
     </>

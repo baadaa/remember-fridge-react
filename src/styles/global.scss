@@ -1,4 +1,4 @@
-@import 'normalize.scss';
+@import "normalize.scss";
 
 html,
 body {
@@ -7,23 +7,39 @@ body {
   margin: 0;
   position: relative;
   background: #f4f4f4;
+  background-color: var(--bodyBg);
   color: #222;
-  font-family: 'Raleway', sans-serif;
+  color: var(--content);
+  font-family: "Raleway", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.4;
   overflow-x: hidden;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
-.freezerSection {
-  background-color: #999;
-  background-image: url('../img/pat-2.png');
+.lightMode {
+  --bodyBg: #f4f4f4;
+  --content: #222;
+  --settingOverlayBg: rgba(255, 255, 255, 0.95);
+  --settingsContent: #222;
 }
 
-.fridgeSection {
-  background-image: url('../img/pat.png');
-  background-color: #f4f4f4;
+.darkMode {
+  --bodyBg: #202020;
+  --content: #f4f4f4;
+  --settingOverlayBg: rgba(0, 0, 0, 0.95);
+  --settingsContent: #f4f4f4;
+}
+
+#freezerSection {
+  // background-color: #999;
+  background-image: url("../img/pat-2.png");
+}
+
+#fridgeSection {
+  background-image: url("../img/pat.png");
+  // background-color: #f4f4f4;
 }
 
 #root {
