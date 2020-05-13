@@ -264,7 +264,7 @@ class FoodEditor extends React.Component {
             <DateField
               id="expires"
               labelText="Expiration date (optional)"
-              isRequired={true}
+              isRequired={false}
               value={expires}
               ref={this.expDatePicker}
             />
