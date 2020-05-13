@@ -56,11 +56,9 @@ const resetOrientation = (srcBase64, srcOrientation, callback) => {
         height = max_size;
       }
     }
-    canvas.width = width;
-    canvas.height = height;
 
     // set proper canvas dimensions before transform & export
-    if ([5, 6, 7, 8].indexOf(srcOrientation) > -1) {
+    if (4 < srcOrientation && srcOrientation < 9) {
       canvas.width = height;
       canvas.height = width;
     } else {
