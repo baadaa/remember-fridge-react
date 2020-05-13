@@ -19,6 +19,7 @@ class App extends React.Component {
   state = {
     selectedSection: "fridge",
     editorIsOpen: false,
+    settingsIsOpen: false,
     currentItem: this.blankItemState,
     foodItems: [],
     editorMode: "Add"
@@ -150,11 +151,16 @@ class App extends React.Component {
     const afterEdit = { ...itemBeforeEdit, [targetId]: newValue };
     this.setState({ currentItem: afterEdit });
   };
+  toggleSettings = () => {
+    const isOpen = this.state.settingsIsOpen;
+    this.setState({ settingsIsOpen: !isOpen });
+  };
   render = () => (
     <>
       <Header
-        section={this.state.selectedSection}
-        change={this.handleSectionChange}
+        currentSection={this.state.selectedSection}
+        sectionChange={this.handleSectionChange}
+        toggleSettings={this.toggleSettings}
       />
       <Refrigerator
         foodItems={this.state.foodItems}

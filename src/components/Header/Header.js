@@ -143,22 +143,28 @@ const NavItem = ({ id, label, change, checked }) => (
     <label htmlFor={id}>{label}</label>
   </>
 );
-const HeaderBlock = ({ section, change }) => {
+const HeaderBlock = ({ currentSection, sectionChange, toggleSettings }) => {
   return (
     <Header>
       <ShoppingListBtn />
       My Fridge
+      <button
+        style={{ position: "absolute", top: 0, right: 0 }}
+        onClick={toggleSettings}
+      >
+        X
+      </button>
       <ToggleNav>
         <NavItem
           id="fridge"
-          checked={section === "fridge"}
-          change={change}
+          checked={currentSection === "fridge"}
+          change={sectionChange}
           label="Fridge"
         />
         <NavItem
           id="freezer"
-          checked={section === "freezer"}
-          change={change}
+          checked={currentSection === "freezer"}
+          change={sectionChange}
           label="Freezer"
         />
       </ToggleNav>
