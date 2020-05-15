@@ -11,7 +11,7 @@ import photoPrompt from "../../img/add-photo.svg";
 const fieldsWidth = 223;
 const EditorOverlay = styled.div`
   position: fixed;
-  z-index: 3;
+  z-index: 100;
   background: rgba(0, 0, 0, 0.9);
   top: 0;
   left: 0;

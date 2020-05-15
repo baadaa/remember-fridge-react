@@ -5,55 +5,29 @@ import foodIcon from "../../img/food.svg";
 import styled from "styled-components";
 import ColorPalette from "../ColorPalette/ColorPalette";
 
+const cardWidth = {
+  large: 150,
+  small: 140
+};
 const Food = styled.article`
-  margin: 0 20px 20px 0;
   position: relative;
-
+  box-sizing: border-box;
   &:hover {
     transform: scale(1.05);
-  }
-
-  &:nth-of-type(4n) {
-    margin-right: 0;
-  }
-
-  @media screen and (max-width: 760px) {
-    &:nth-of-type(4n) {
-      margin-right: 20px;
-    }
-
-    &:nth-of-type(3n) {
-      margin-right: 0;
-    }
-  }
-
-  @media screen and (max-width: 570px) {
-    &:nth-of-type(3n) {
-      margin-right: 20px;
-    }
-
-    &:nth-of-type(2n) {
-      margin-right: 0;
-    }
   }
 
   transition: transform 0.2s;
   perspective: 1000px;
   .flipper {
-    width: 170px;
-    height: 170px;
+    width: ${cardWidth.large}px;
+    height: ${cardWidth.large}px;
     transition: transform 0.3s, box-shadow 0.2s;
     transform-style: preserve-3d;
     position: relative;
 
-    @media screen and (max-width: 380px) {
-      width: 150px;
-      height: 150px;
-    }
-
-    @media screen and (max-width: 340px) {
-      width: 130px;
-      height: 130px;
+    @media screen and (max-width: 375px) {
+      width: ${cardWidth.small}px;
+      height: ${cardWidth.small}px;
     }
   }
   &:hover {
@@ -62,9 +36,9 @@ const Food = styled.article`
     }
   }
   .flipper > div {
-    width: 170px;
+    width: ${cardWidth.large}px;
     box-sizing: border-box;
-    height: 170px;
+    height: ${cardWidth.large}px;
     border-radius: 10px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
     backface-visibility: hidden;
@@ -77,14 +51,9 @@ const Food = styled.article`
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
-    @media screen and (max-width: 380px) {
-      width: 150px;
-      height: 150px;
-    }
-
-    @media screen and (max-width: 340px) {
-      width: 130px;
-      height: 130px;
+    @media screen and (max-width: 375px) {
+      width: ${cardWidth.small}px;
+      height: ${cardWidth.small}px;
     }
   }
 `;
@@ -101,19 +70,14 @@ const Front = styled.div`
   transform: rotateY(0deg);
   img {
     cursor: pointer;
-    width: 170px;
-    height: 170px;
+    width: ${cardWidth.large}px;
+    height: ${cardWidth.large}px;
     border-radius: 10px;
     object-fit: cover;
 
-    @media screen and (max-width: 380px) {
-      width: 150px;
-      height: 150px;
-    }
-
-    @media screen and (max-width: 340px) {
-      width: 130px;
-      height: 130px;
+    @media screen and (max-width: 375px) {
+      width: ${cardWidth.small}px;
+      height: ${cardWidth.small}px;
     }
   }
   h2 {
@@ -170,20 +134,21 @@ const Back = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 
   h2 {
     margin: 0;
-    font-size: 18px;
-    line-height: 1.2;
+    font-size: 15px;
+    line-height: 1.3;
     font-weight: 400;
+    @media screen and (max-width: 375px) {
+      // font-size: 12px;
+    }
   }
 
   .quantity {
     position: static;
-    font-size: 14px;
-    line-height: 1;
+    font-size: 12px;
+    line-height: 1.5;
     box-shadow: none;
     padding: 0;
     color: #000;
@@ -279,29 +244,33 @@ const EditButtons = styled.nav`
   }
 `;
 
-const CardBack = ({ name, quantity, added, expires, children }) => (
-  <Back>
-    {name ? <h2>{name}</h2> : ""}
-    {quantity ? <span className="quantity">{quantity}</span> : ""}
-    {added ? (
-      <div className="dates">
-        <img className="addedIcon" src={addIcon} alt="" />
-        {added}
-      </div>
-    ) : (
-      ""
-    )}
-    {expires ? (
-      <div className="dates">
-        <img className="expireIcon" src={expireIcon} alt="" />
-        {expires}
-      </div>
-    ) : (
-      ""
-    )}
-    {children}
-  </Back>
-);
+const CardBack = ({ name, quantity, added, expires, children }) => {
+  const truncatedName =
+    name.length >= 30 ? `${name.substring(0, 30)}...` : name;
+  return (
+    <Back>
+      {name ? <h2>{truncatedName}</h2> : ""}
+      {quantity ? <span className="quantity">{quantity}</span> : ""}
+      {added ? (
+        <div className="dates">
+          <img className="addedIcon" src={addIcon} alt="" />
+          {added}
+        </div>
+      ) : (
+        ""
+      )}
+      {expires ? (
+        <div className="dates">
+          <img className="expireIcon" src={expireIcon} alt="" />
+          {expires}
+        </div>
+      ) : (
+        ""
+      )}
+      {children}
+    </Back>
+  );
+};
 
 const DeleteConfirmModal = styled.div`
   transition: transform 0.2s, opacity 0.2s;

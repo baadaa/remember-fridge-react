@@ -7,7 +7,7 @@ const SettingOverlay = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 9;
+  z-index: 100;
   display: flex;
   justify-content: center;
   align-items: center;

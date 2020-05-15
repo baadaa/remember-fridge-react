@@ -1,11 +1,10 @@
 import React from "react";
 
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
 import Refrigerator from "./components/Refrigerator/Refrigerator";
 // import foodItems from "./components/sampleData/sampleData";
 import FoodEditor from "./components/FoodEditor/FoodEditor";
 import SettingsModal from "./components/SettingsModal/SettingsModal";
+import { BottomNavBar } from "./components/NavBar/NavBar";
 
 import takePhotoUtil from "./components/TakePhoto";
 
@@ -26,8 +25,9 @@ class App extends React.Component {
     foodItems: [],
     editorMode: "add"
   };
-  handleSectionChange = changeEvent => {
-    const selectedTarget = changeEvent.target.value;
+  handleSectionChange = e => {
+    console.log(e.target.dataset);
+    const selectedTarget = e.target.dataset.id;
     this.setState({ selectedSection: selectedTarget }, () => {
       document.body.id = `${selectedTarget}Section`;
     });
@@ -171,16 +171,19 @@ class App extends React.Component {
   };
   render = () => (
     <>
-      <Header
-        currentSection={this.state.selectedSection}
-        sectionChange={this.handleSectionChange}
-        toggleSettings={this.toggleSettings}
-      />
       <Refrigerator
         foodItems={this.state.foodItems}
         category={this.state.selectedSection}
         openEditor={this.openEditor}
         deleteItem={this.deleteItem}
+        currentSection={this.state.selectedSection}
+        sectionChange={this.handleSectionChange}
+        toggleSettings={this.toggleSettings}
+      />
+      <BottomNavBar
+        currentSection={this.state.selectedSection}
+        sectionChange={this.handleSectionChange}
+        toggleSettings={this.toggleSettings}
       />
       <FoodEditor
         isOpen={this.state.editorIsOpen}
@@ -200,7 +203,6 @@ class App extends React.Component {
         darkMode={this.state.darkMode}
         changeColor={this.toggleDarkMode}
       />
-      <Footer />
     </>
   );
 }

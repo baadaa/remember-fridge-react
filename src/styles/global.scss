@@ -14,19 +14,22 @@ body {
   font-size: 16px;
   font-weight: 400;
   line-height: 1.4;
-  overflow-x: hidden;
+  // overflow-x: hidden;
   transition: all 0.5s;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .lightMode {
-  --bodyBg: #f4f4f4;
+  --bodyBg: #00A2D9;
+  --addButton: #7AB800;
   --content: #222;
   --settingOverlayBg: rgba(255, 255, 255, 0.95);
   --settingsContent: #222;
 }
 
 .darkMode {
-  --bodyBg: #202020;
+  --bodyBg: #000;
   --content: #f4f4f4;
   --settingOverlayBg: rgba(0, 0, 0, 0.95);
   --settingsContent: #f4f4f4;
@@ -34,11 +37,11 @@ body {
 
 #freezerSection {
   // background-color: #999;
-  background-image: url("../img/pat-2.png");
+  // background-image: url("../img/pat-2.png");
 }
 
 #fridgeSection {
-  background-image: url("../img/pat.png");
+  // background-image: url("../img/pat.png");
   // background-color: #f4f4f4;
 }
 
