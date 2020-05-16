@@ -21,8 +21,8 @@ class App extends React.Component {
     category: "fridge"
   };
   state = {
-    selectedSection: "fridge",
-    editingSection: "fridge",
+    activeArea: "fridge",
+    editorLaunchIn: "fridge",
     darkMode: false,
     editorIsOpen: false,
     settingsIsOpen: false,
@@ -30,20 +30,52 @@ class App extends React.Component {
     foodItems: [],
     editorMode: "add"
   };
-  handleSectionChange = e => {
-    const selectedTarget = e.id || e.target.dataset.id;
+  handleNavigation = e => {
+    const targetArea = e.target.dataset.id;
+    this.setState({ activeArea: targetArea, editorLaunchIn: targetArea });
+  };
+  handleEditorRadioButtons = e => {
+    const targetArea = e.id;
+    this.setState({ activeArea: targetArea });
+  };
+  openEditor = item => {
+    this.setState({
+      editorIsOpen: true,
+      editorLaunchIn: this.state.activeArea
+    });
+    if (item.id) {
+      this.setState({ currentItem: item, editorMode: "edit" });
+    } else {
+      this.setState({ editorMode: "add" });
+    }
+  };
+  closeEditor = closingAs => {
+    this.setState({
+      editorIsOpen: false,
+      currentItem: this.blankItemState,
+      activeArea: closingAs
+    });
+  };
+  addItem = () => {
+    const oldList = this.state.foodItems;
+    const newList = [
+      ...oldList,
+      {
+        ...this.state.currentItem,
+        category: this.state.activeArea,
+        id: new Date().toString()
+      }
+    ];
     this.setState(
-      { selectedSection: selectedTarget, editingSection: selectedTarget },
+      {
+        foodItems: newList,
+        editorIsOpen: false,
+        currentItem: this.blankItemState
+      },
       () => {
-        document.body.id = `${selectedTarget}Section`;
+        this.setLocalStorage();
       }
     );
-  };
-  sectionChangeFromEditor = e => {
-    const selectedTarget = e.id || e.target.dataset.id;
-    this.setState({ selectedSection: selectedTarget }, () => {
-      document.body.id = `${selectedTarget}Section`;
-    });
   };
   deleteItem = itemId => {
     const filteredList = this.state.foodItems.filter(
@@ -53,17 +85,20 @@ class App extends React.Component {
       this.setLocalStorage();
     });
   };
-  openEditor = item => {
-    this.setState({
-      editorIsOpen: true,
-      editingSection: this.state.selectedSection
-    });
-    if (item.id) {
-      this.setState({ currentItem: item, editorMode: "edit" });
-    } else {
-      this.setState({ editorMode: "add" });
-    }
-    // document.body.classList.add("noscroll");
+  deleteFromEditor = () => {
+    const filteredList = this.state.foodItems.filter(
+      foodItem => foodItem.id !== this.state.currentItem.id
+    );
+    this.setState(
+      {
+        foodItems: filteredList,
+        editorIsOpen: false,
+        currentItem: this.blankItemState
+      },
+      () => {
+        this.setLocalStorage();
+      }
+    );
   };
   takePhoto = e => {
     const itemBeforePhoto = this.state.currentItem;
@@ -93,56 +128,11 @@ class App extends React.Component {
     } else {
       this.setLocalStorage();
     }
-    document.body.id = `${this.state.selectedSection}Section`;
 
     document.body.className = `${
       this.state.darkMode ? "darkMode" : "lightMode"
     }`;
   }
-  closeEditor = closingAs => {
-    this.setState({
-      editorIsOpen: false,
-      currentItem: this.blankItemState,
-      selectedSection: closingAs
-    });
-    document.body.classList.remove("noscroll");
-  };
-  deleteItemFromEditor = () => {
-    const filteredList = this.state.foodItems.filter(
-      foodItem => foodItem.id !== this.state.currentItem.id
-    );
-    this.setState(
-      {
-        foodItems: filteredList,
-        editorIsOpen: false,
-        currentItem: this.blankItemState
-      },
-      () => {
-        this.setLocalStorage();
-      }
-    );
-  };
-  addNewItem = () => {
-    const oldList = this.state.foodItems;
-    const newList = [
-      ...oldList,
-      {
-        ...this.state.currentItem,
-        category: this.state.selectedSection,
-        id: new Date().toString()
-      }
-    ];
-    this.setState(
-      {
-        foodItems: newList,
-        editorIsOpen: false,
-        currentItem: this.blankItemState
-      },
-      () => {
-        this.setLocalStorage();
-      }
-    );
-  };
   saveChanges = () => {
     const beforeChange = this.state.foodItems;
     const changedResults = this.state.currentItem;
@@ -196,22 +186,22 @@ class App extends React.Component {
       <SimpleHeader user={user} toggleSettings={this.toggleSettings} />
       <Refrigerator
         foodItems={this.state.foodItems}
-        category={this.state.selectedSection}
+        category={this.state.activeArea}
         openEditor={this.openEditor}
         deleteItem={this.deleteItem}
-        currentSection={this.state.selectedSection}
-        sectionChange={this.handleSectionChange}
+        currentSection={this.state.activeArea}
+        sectionChange={this.handleNavigation}
         toggleSettings={this.toggleSettings}
       />
       <BottomNavBar
-        currentSection={this.state.selectedSection}
-        sectionChange={this.handleSectionChange}
+        currentSection={this.state.activeArea}
+        sectionChange={this.handleNavigation}
         toggleSettings={this.toggleSettings}
       />
       <FoodEditor
-        sectionChange={this.sectionChangeFromEditor}
-        currentSection={this.state.selectedSection}
-        editingSection={this.state.editingSection}
+        sectionChange={this.handleEditorRadioButtons}
+        currentSection={this.state.activeArea}
+        editorLaunchIn={this.state.editorLaunchIn}
         isOpen={this.state.editorIsOpen}
         closeEditor={this.closeEditor}
         editorMode={this.state.editorMode}
@@ -220,9 +210,9 @@ class App extends React.Component {
         editCategory={this.editCategory}
         takePhoto={this.takePhoto}
         editDate={this.editDate}
-        deleteItemFromEditor={this.deleteItemFromEditor}
+        deleteFromEditor={this.deleteFromEditor}
         saveChanges={this.saveChanges}
-        addNewItem={this.addNewItem}
+        addItem={this.addItem}
       />
       <SettingsModal
         isOpen={this.state.settingsIsOpen}

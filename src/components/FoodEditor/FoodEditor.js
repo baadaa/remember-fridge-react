@@ -91,8 +91,8 @@ const TopSectionWrapper = styled.div`
     font-size: 14px;
     align-items: center;
   }
-  input,
-  label {
+  input.sectionChange,
+  label.sectionChange {
     margin-top: 5px;
   }
   input[type="radio"] {
@@ -323,7 +323,7 @@ class FoodEditor extends React.Component {
   addDatePicker = React.createRef();
   expDatePicker = React.createRef();
   closeEditor = () => {
-    const editorLaunchedIn = this.props.editingSection;
+    const editorLaunchedIn = this.props.editorLaunchIn;
     const currentFridgeState = this.props.currentSection;
     const closingAs =
       editorLaunchedIn !== currentFridgeState
@@ -334,8 +334,8 @@ class FoodEditor extends React.Component {
   onChangeDate = (selectedDates, dateStr, instance) => {
     this.props.editDate(dateStr, instance.element.id);
   };
-  deleteItemFromEditor = () => {
-    this.props.deleteItemFromEditor();
+  deleteFromEditor = () => {
+    this.props.deleteFromEditor();
   };
   componentDidMount() {
     flatpickr(this.addDatePicker.current, {
@@ -366,7 +366,7 @@ class FoodEditor extends React.Component {
       currentSection,
       editField,
       saveChanges,
-      addNewItem
+      addItem
     } = this.props;
 
     const TopSection = ({ img, takePhoto }) => (
@@ -386,6 +386,7 @@ class FoodEditor extends React.Component {
         </PhotoInput>
         <div style={{ padding: "10px" }}>
           <input
+            className="sectionChange"
             type="radio"
             id="fridge"
             name="sectionSelector"
@@ -393,12 +394,13 @@ class FoodEditor extends React.Component {
             checked={currentSection === "fridge"}
             onChange={this.changeSection}
           />
-          <label htmlFor="fridge">
+          <label className="sectionChange" htmlFor="fridge">
             <span className="circle"></span>
             Fridge
           </label>
 
           <input
+            className="sectionChange"
             type="radio"
             id="freezer"
             name="sectionSelector"
@@ -406,7 +408,7 @@ class FoodEditor extends React.Component {
             checked={currentSection === "freezer"}
             onChange={this.changeSection}
           />
-          <label htmlFor="freezer">
+          <label className="sectionChange" htmlFor="freezer">
             <span className="circle"></span>
             Freezer
           </label>
@@ -457,7 +459,7 @@ class FoodEditor extends React.Component {
             <button className="cancel" onClick={this.closeEditor}>
               Cancel
             </button>
-            <button className="remove" onClick={this.deleteItemFromEditor}>
+            <button className="remove" onClick={this.deleteFromEditor}>
               Remove it
             </button>
             <button
@@ -480,7 +482,7 @@ class FoodEditor extends React.Component {
             </button>
           </ButtonBlock>
           <ButtonBlock className={editorMode === "add" ? "active" : ""}>
-            <button className="save" onClick={addNewItem}>
+            <button className="save" onClick={addItem}>
               Add item
             </button>
             <button className="cancel" onClick={this.closeEditor}>
