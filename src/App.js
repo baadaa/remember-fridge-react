@@ -22,6 +22,7 @@ class App extends React.Component {
   };
   state = {
     selectedSection: "fridge",
+    editingSection: "fridge",
     darkMode: false,
     editorIsOpen: false,
     settingsIsOpen: false,
@@ -30,6 +31,15 @@ class App extends React.Component {
     editorMode: "add"
   };
   handleSectionChange = e => {
+    const selectedTarget = e.id || e.target.dataset.id;
+    this.setState(
+      { selectedSection: selectedTarget, editingSection: selectedTarget },
+      () => {
+        document.body.id = `${selectedTarget}Section`;
+      }
+    );
+  };
+  sectionChangeFromEditor = e => {
     const selectedTarget = e.id || e.target.dataset.id;
     this.setState({ selectedSection: selectedTarget }, () => {
       document.body.id = `${selectedTarget}Section`;
@@ -44,7 +54,10 @@ class App extends React.Component {
     });
   };
   openEditor = item => {
-    this.setState({ editorIsOpen: true });
+    this.setState({
+      editorIsOpen: true,
+      editingSection: this.state.selectedSection
+    });
     if (item.id) {
       this.setState({ currentItem: item, editorMode: "edit" });
     } else {
@@ -86,11 +99,11 @@ class App extends React.Component {
       this.state.darkMode ? "darkMode" : "lightMode"
     }`;
   }
-  closeEditor = originalSection => {
+  closeEditor = closingAs => {
     this.setState({
       editorIsOpen: false,
       currentItem: this.blankItemState,
-      selectedSection: originalSection
+      selectedSection: closingAs
     });
     document.body.classList.remove("noscroll");
   };
@@ -196,8 +209,9 @@ class App extends React.Component {
         toggleSettings={this.toggleSettings}
       />
       <FoodEditor
-        sectionChange={this.handleSectionChange}
+        sectionChange={this.sectionChangeFromEditor}
         currentSection={this.state.selectedSection}
+        editingSection={this.state.editingSection}
         isOpen={this.state.editorIsOpen}
         closeEditor={this.closeEditor}
         editorMode={this.state.editorMode}

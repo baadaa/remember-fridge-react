@@ -318,13 +318,18 @@ const ButtonBlock = styled.div`
 
 class FoodEditor extends React.Component {
   state = {
-    isRemoving: false,
-    originalSection: ""
+    isRemoving: false
   };
   addDatePicker = React.createRef();
   expDatePicker = React.createRef();
   closeEditor = () => {
-    this.props.closeEditor(this.state.originalSection);
+    const editorLaunchedIn = this.props.editingSection;
+    const currentFridgeState = this.props.currentSection;
+    const closingAs =
+      editorLaunchedIn !== currentFridgeState
+        ? editorLaunchedIn
+        : currentFridgeState;
+    this.props.closeEditor(closingAs);
   };
   onChangeDate = (selectedDates, dateStr, instance) => {
     this.props.editDate(dateStr, instance.element.id);
@@ -333,7 +338,6 @@ class FoodEditor extends React.Component {
     this.props.deleteItemFromEditor();
   };
   componentDidMount() {
-    this.setState({ originalSection: this.props.currentSection });
     flatpickr(this.addDatePicker.current, {
       onChange: this.onChangeDate,
       dateFormat: "F j, Y"
@@ -450,10 +454,7 @@ class FoodEditor extends React.Component {
             <button className="save" onClick={saveChanges}>
               Save
             </button>
-            <button
-              className="cancel"
-              onClick={() => this.closeEditor(this.state.originalSection)}
-            >
+            <button className="cancel" onClick={this.closeEditor}>
               Cancel
             </button>
             <button className="remove" onClick={this.deleteItemFromEditor}>
@@ -482,10 +483,7 @@ class FoodEditor extends React.Component {
             <button className="save" onClick={addNewItem}>
               Add item
             </button>
-            <button
-              className="cancel"
-              onClick={() => this.closeEditor(this.state.originalSection)}
-            >
+            <button className="cancel" onClick={this.closeEditor}>
               Cancel
             </button>
           </ButtonBlock>
