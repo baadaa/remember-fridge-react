@@ -67,6 +67,7 @@ const FoodCard = ({ children, cancelModal }) => (
 
 const Front = styled.div`
   z-index: 2;
+  color: #202020;
   transform: rotateY(0deg);
   img {
     cursor: pointer;
@@ -134,7 +135,7 @@ const Back = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-
+  color: #202020;
   h2 {
     margin: 0;
     font-size: 15px;

@@ -12,7 +12,7 @@ const BottomNav = styled.nav`
   z-index: -1;
   height: 74px;
   right: 0;
-  background: #004f6a;
+  background: var(--navBg);
   color: #fff;
   z-index: 99;
   box-shadow: 0 -4px 9px rgba(0, 0, 0, 0.5);
@@ -69,7 +69,7 @@ const SideNav = styled.nav`
   order: -1;
   border-radius: 10px 0 0 10px;
   align-self: flex-start;
-  background: #004f6a;
+  background: var(--navBg);
   margin-left: auto;
   margin-top: 40px;
   z-index: 0;

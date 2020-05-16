@@ -2,44 +2,29 @@ import React from "react";
 import "../../styles/flatpick.scss";
 import flatpickr from "flatpickr";
 import blank from "../../img/_.png";
-// import closeIcon from "../img/close.svg";
-// import expireIcon from "../img/expires.svg";
-// import ColorPalette from "./ColorPalette";
 import styled from "styled-components";
 import photoPrompt from "../../img/add-photo.svg";
 
-const fieldsWidth = 223;
 const EditorOverlay = styled.div`
-  position: fixed;
+  position: absolute;
   z-index: 100;
-  background: rgba(0, 0, 0, 0.9);
+  background: var(--settingOverlayBg);
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  display: flex;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
   color: #fff;
-  align-items: center;
-  justify-content: center;
   transition: transform 0.3s, opacity 0.3s;
-  transform: ${props => (props.isOpen ? "translateX(0)" : "translateX(100vw)")};
+  transform: ${props =>
+    props.isOpen ? "translateX(0)" : "translateX(-100vw)"};
   opacity: ${props => (props.isOpen ? 1 : 0)};
-  & > div {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 0;
-    justify-content: center;
-    align-items: center;
-  }
 `;
 
 const EditorOverlayWrapper = ({ isOpen, children }) => (
-  <EditorOverlay isOpen={isOpen}>
-    <div>{children}</div>
-  </EditorOverlay>
+  <EditorOverlay isOpen={isOpen}>{children}</EditorOverlay>
 );
 
 const PhotoInput = styled.div`
@@ -47,9 +32,10 @@ const PhotoInput = styled.div`
   background-repeat: no-repeat;
   border-radius: 10px;
   margin-right: 10px;
-  width: ${fieldsWidth}px;
-  height: ${fieldsWidth}px;
+  width: 150px;
+  height: 150px;
   background-color: #fff;
+  border: 1px solid #c8c8c8;
   background-image: url(${photoPrompt});
   background-size: inherit;
   cursor: pointer;
@@ -59,17 +45,29 @@ const PhotoInput = styled.div`
   justify-content: center;
 
   img {
-    width: ${fieldsWidth}px;
-    height: ${fieldsWidth}px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
   }
   label {
     cursor: pointer;
-    height: ${fieldsWidth}px;
+    height: 150px;
 
     input[type="file"] {
       position: fixed;
       top: -1000px;
+      left: -1000px;
+    }
+  }
+  @media screen and (max-width: 800px) {
+    width: 100px;
+    height: 100px;
+    img {
+      width: 100px;
+      height: 100px;
+    }
+    label {
+      height: 100px;
     }
   }
   @media screen and (max-width: 456px) {
@@ -77,34 +75,69 @@ const PhotoInput = styled.div`
     margin-bottom: 15px;
   }
 `;
-const PhotoBlock = ({ img, takePhoto }) => (
-  <PhotoInput>
-    <label>
-      <input
-        type="file"
-        id="img"
-        name="img"
-        accept="image/*"
-        placeholder=""
-        onChange={takePhoto}
-      />
-      <img src={img === "" ? blank : img} alt="" />
-    </label>
-  </PhotoInput>
-);
+const TopSectionWrapper = styled.div`
+  margin-left: 80px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  @media screen and (max-width: 800px) {
+    margin-bottom: 20px;
+  }
+  label {
+    display: flex;
+    color: #000;
+    font-size: 14px;
+    align-items: center;
+  }
+  input,
+  label {
+    margin-top: 5px;
+  }
+  input[type="radio"] {
+    opacity: 0;
+    position: fixed;
+    width: 0;
+    &:focus + label {
+      border-color: #39b3ca;
+    }
+    &:checked + label {
+      border-color: #39b3ca;
+      .circle {
+        background: #39b3ca;
+        border-color: #39b3ca;
+      }
+    }
+    &:checked + label .circle {
+      background-image: url("data:image/svg+xml,%3Csvg width='13' height='9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5.5 7L12 1' stroke='%23FFF' stroke-width='2' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+      background-size: 11px;
+      background-position: center;
+      background-repeat: no-repeat;
+      // background-color: #39b3ca;
+      border-color: #39b3ca;
+      overflow: visible;
+    }
+  }
+  .circle {
+    background: #fff;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    margin-right: 7px;
+    border: 1px solid #bbb;
+  }
+`;
 
 const Form = styled.form`
-  width: 600px;
-  overflow-y: auto;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  max-width: 350px;
+  margin: 0 auto;
+  // border: 1px solid blue;
   h2 {
     width: 100%;
     margin: 0;
     margin-bottom: 0.6em;
+    text-align: center;
+    color: var(--overlayHeading);
     span {
       text-transform: capitalize;
     }
@@ -125,57 +158,64 @@ const EditorForm = ({ editorMode, children }) => (
 
 const Fields = styled.div`
   text-align: left;
-  width: ${fieldsWidth}px;
 `;
 
 const FieldItem = styled.div`
-  width: ${fieldsWidth}px;
-  height: 47px;
   box-sizing: border-box;
-  border-radius: 7px;
+  display: flex;
+  align-items: center;
   font-size: 0.75rem;
   line-height: 1rem;
-  background: #fff;
-  padding-top: 0.2rem;
-  padding-left: 1rem;
   margin-bottom: 0.7rem;
   color: #999;
+  height: 47px;
+  label {
+    color: var(--formLabelText);
+    font-weight: 700;
+    flex-basis: 80px;
+  }
   &:last-of-type {
     margin-bottom: 0;
   }
   .req {
     color: red;
   }
-  input {
-    margin-top: -1.2rem;
-    margin-left: -1rem;
-    box-sizing: border-box;
-    background: rgba(0, 0, 0, 0);
-    width: 195px;
-    height: 47px;
-    padding-top: 1.1rem;
-    padding-left: 1rem;
-    border: 0;
-    color: #000;
-    border-radius: 7px;
-    font-size: 1rem;
+  .inputStyle {
+    background: var(--formFieldBg);
+    flex: 1;
+    border-radius: 4px;
+    input {
+      box-sizing: border-box;
+      background: rgba(0, 0, 0, 0);
+      width: 100%;
+      height: 47px;
+      padding-left: 1rem;
+      border: 0;
+      color: #000;
+      border-radius: 7px;
+      font-size: 1rem;
+    }
   }
 `;
 
 const TextField = ({ labelText, id, value, editField, isRequired }) => (
   <FieldItem>
-    <label htmlFor={id}>{labelText}</label>
-    <span className="req" style={{ display: !isRequired ? "none" : "" }}>
-      *
-    </span>
-    <input
-      type="text"
-      id={id}
-      name={id}
-      placeholder={labelText}
-      onChange={editField}
-      value={value}
-    />
+    <label htmlFor={id}>
+      {labelText}
+      <span className="req" style={{ display: !isRequired ? "none" : "" }}>
+        *
+      </span>
+    </label>
+    <div className="inputStyle">
+      <input
+        type="text"
+        id={id}
+        name={id}
+        placeholder={labelText}
+        onChange={editField}
+        value={value}
+      />
+    </div>
   </FieldItem>
 );
 
@@ -183,38 +223,116 @@ const DateField = React.forwardRef((props, ref) => {
   const { labelText, id, value, isRequired } = props;
   return (
     <FieldItem>
-      <label htmlFor={id}>{labelText}</label>
-      <span className="req" style={{ display: !isRequired ? "none" : "" }}>
-        *
-      </span>
-      <input
-        className="flatpickr-input form-control input"
-        placeholder={labelText}
-        type="text"
-        id={id}
-        name={id}
-        value={value}
-        readOnly="readonly"
-        ref={ref}
-      />
+      <label htmlFor={id}>
+        {labelText}
+        <span className="req" style={{ display: !isRequired ? "none" : "" }}>
+          *
+        </span>
+      </label>
+      <div className="inputStyle">
+        <input
+          className="flatpickr-input form-control input"
+          placeholder={labelText}
+          type="text"
+          id={id}
+          name={id}
+          value={value}
+          readOnly="readonly"
+          ref={ref}
+        />
+      </div>
     </FieldItem>
   );
 });
 
+const ButtonBlock = styled.div`
+  margin-left: 80px;
+  margin-top: 20px;
+  display: none;
+  &.active {
+    display: flex;
+  }
+  box-sizing: border-box;
+  justify-content: space-between;
+  @media screen and (max-width: 800px) {
+    margin-left: 0;
+  }
+  flex-wrap: wrap;
+
+  button {
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    background: #333;
+    padding: 10px 20px;
+    height: 45px;
+    font-size: 14px;
+    font-weight: 700;
+    flex-basis: 48%;
+    transition: opacity 0.3s, transform 0.3s;
+    &.save {
+      background: var(--saveButton);
+      transform: ${props =>
+        !props.isRemoving ? "translateY(0)" : "translateY(45px)"};
+      opacity: ${props => (!props.isRemoving ? 1 : 0)};
+      pointer-events: ${props => (!props.isRemoving ? "all" : "none")};
+    }
+    &.cancel {
+      background: transparent;
+      border: 1px solid var(--cancelButton);
+      color: var(--cancelButton);
+      transform: ${props =>
+        !props.isRemoving ? "translateY(0)" : "translateY(45px)"};
+      opacity: ${props => (!props.isRemoving ? 1 : 0)};
+      pointer-events: ${props => (!props.isRemoving ? "all" : "none")};
+    }
+    &.remove {
+      transform: ${props =>
+        props.isRemoving ? "translateY(-45px)" : "translateY(0)"};
+      opacity: ${props => (props.isRemoving ? 1 : 0)};
+      pointer-events: ${props => (props.isRemoving ? "all" : "none")};
+      background: var(--removeButton);
+    }
+    &.cancelRemoval {
+      transform: ${props =>
+        props.isRemoving ? "translateY(-45px)" : "translateY(0)"};
+      opacity: ${props => (props.isRemoving ? 1 : 0)};
+      pointer-events: ${props => (props.isRemoving ? "all" : "none")};
+      background: transparent;
+      border: 1px solid var(--removeCancelButton);
+      color: var(--removeCancelButton);
+    }
+    &.removePrompt {
+      flex-basis: 100%;
+      margin-left: 0;
+      padding: 0;
+      height: auto;
+      text-align: center;
+      background: transparent;
+      color: var(--removeButton);
+      text-decoration: underline;
+    }
+  }
+`;
+
 class FoodEditor extends React.Component {
+  state = {
+    isRemoving: false,
+    originalSection: ""
+  };
   addDatePicker = React.createRef();
   expDatePicker = React.createRef();
   closeEditor = () => {
-    this.props.closeEditor();
+    this.props.closeEditor(this.state.originalSection);
   };
   onChangeDate = (selectedDates, dateStr, instance) => {
     this.props.editDate(dateStr, instance.element.id);
   };
   deleteItemFromEditor = () => {
-    alert("delete?");
     this.props.deleteItemFromEditor();
   };
   componentDidMount() {
+    this.setState({ originalSection: this.props.currentSection });
     flatpickr(this.addDatePicker.current, {
       onChange: this.onChangeDate,
       dateFormat: "F j, Y"
@@ -224,6 +342,10 @@ class FoodEditor extends React.Component {
       dateFormat: "F j, Y"
     });
   }
+  changeSection = e => {
+    this.props.sectionChange(e.target);
+    this.props.editCategory(e.target.value);
+  };
   render() {
     const {
       currentItem: {
@@ -236,15 +358,61 @@ class FoodEditor extends React.Component {
       isOpen,
       editorMode,
       takePhoto,
+      currentSection,
       editField,
       saveChanges,
       addNewItem
     } = this.props;
 
+    const TopSection = ({ img, takePhoto }) => (
+      <TopSectionWrapper>
+        <PhotoInput>
+          <label>
+            <input
+              type="file"
+              id="img"
+              name="img"
+              accept="image/*"
+              placeholder=""
+              onChange={takePhoto}
+            />
+            <img src={img === "" ? blank : img} alt="" />
+          </label>
+        </PhotoInput>
+        <div style={{ padding: "10px" }}>
+          <input
+            type="radio"
+            id="fridge"
+            name="sectionSelector"
+            value="fridge"
+            checked={currentSection === "fridge"}
+            onChange={this.changeSection}
+          />
+          <label htmlFor="fridge">
+            <span className="circle"></span>
+            Fridge
+          </label>
+
+          <input
+            type="radio"
+            id="freezer"
+            name="sectionSelector"
+            value="freezer"
+            checked={currentSection === "freezer"}
+            onChange={this.changeSection}
+          />
+          <label htmlFor="freezer">
+            <span className="circle"></span>
+            Freezer
+          </label>
+        </div>
+      </TopSectionWrapper>
+    );
+
     return (
       <EditorOverlayWrapper isOpen={isOpen}>
         <EditorForm editorMode={editorMode}>
-          <PhotoBlock img={img} takePhoto={takePhoto} />
+          <TopSection img={img} takePhoto={takePhoto} />
           <Fields>
             <TextField
               id="name"
@@ -261,61 +429,65 @@ class FoodEditor extends React.Component {
             />
             <DateField
               id="added"
-              labelText="Added date"
+              labelText="Added on"
               isRequired={true}
               value={added}
               ref={this.addDatePicker}
             />
             <DateField
               id="expires"
-              labelText="Expiration date (optional)"
+              labelText="Expires on"
               isRequired={false}
               value={expires}
               ref={this.expDatePicker}
             />
           </Fields>
-          <div
-            style={{
-              display: editorMode === "edit" ? "block" : "none"
-            }}
+          <ButtonBlock
+            isRemoving={this.state.isRemoving}
+            className={editorMode === "edit" ? "active" : ""}
           >
-            <button
-              style={{ background: "#333", color: "#FFF" }}
-              onClick={saveChanges}
-            >
+            <button className="save" onClick={saveChanges}>
               Save
             </button>
             <button
-              style={{ background: "#333", color: "#FFF" }}
-              onClick={this.deleteItemFromEditor}
-            >
-              Remove
-            </button>
-            <button
-              style={{ background: "#333", color: "#FFF" }}
-              onClick={this.closeEditor}
+              className="cancel"
+              onClick={() => this.closeEditor(this.state.originalSection)}
             >
               Cancel
             </button>
-          </div>
-          <div
-            style={{
-              display: editorMode === "add" ? "block" : "none"
-            }}
-          >
+            <button className="remove" onClick={this.deleteItemFromEditor}>
+              Remove it
+            </button>
             <button
-              style={{ background: "#333", color: "#FFF" }}
-              onClick={addNewItem}
+              className="cancelRemoval"
+              onClick={() =>
+                this.setState({ isRemoving: !this.state.isRemoving })
+              }
             >
+              Keep it
+            </button>
+            <button
+              className="removePrompt"
+              onClick={() =>
+                this.setState({ isRemoving: !this.state.isRemoving })
+              }
+            >
+              {this.state.isRemoving
+                ? "This action cannot be undone."
+                : "Remove this item"}
+            </button>
+          </ButtonBlock>
+          <ButtonBlock className={editorMode === "add" ? "active" : ""}>
+            <button className="save" onClick={addNewItem}>
               Add item
             </button>
             <button
-              style={{ background: "#333", color: "#FFF" }}
-              onClick={this.closeEditor}
+              className="cancel"
+              onClick={() => this.closeEditor(this.state.originalSection)}
             >
               Cancel
             </button>
-          </div>
+          </ButtonBlock>
         </EditorForm>
       </EditorOverlayWrapper>
     );

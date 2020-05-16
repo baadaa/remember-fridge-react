@@ -1,7 +1,10 @@
 import React from "react";
 
+import SimpleHeader from "./components/Header/SimpleHeader";
 import Refrigerator from "./components/Refrigerator/Refrigerator";
 // import foodItems from "./components/sampleData/sampleData";
+import user from "./components/sampleData/sampleUser";
+
 import FoodEditor from "./components/FoodEditor/FoodEditor";
 import SettingsModal from "./components/SettingsModal/SettingsModal";
 import { BottomNavBar } from "./components/NavBar/NavBar";
@@ -14,7 +17,8 @@ class App extends React.Component {
     quantity: "",
     name: "",
     added: "",
-    expires: ""
+    expires: "",
+    category: "fridge"
   };
   state = {
     selectedSection: "fridge",
@@ -26,8 +30,7 @@ class App extends React.Component {
     editorMode: "add"
   };
   handleSectionChange = e => {
-    console.log(e.target.dataset);
-    const selectedTarget = e.target.dataset.id;
+    const selectedTarget = e.id || e.target.dataset.id;
     this.setState({ selectedSection: selectedTarget }, () => {
       document.body.id = `${selectedTarget}Section`;
     });
@@ -47,7 +50,7 @@ class App extends React.Component {
     } else {
       this.setState({ editorMode: "add" });
     }
-    document.body.classList.add("noscroll");
+    // document.body.classList.add("noscroll");
   };
   takePhoto = e => {
     const itemBeforePhoto = this.state.currentItem;
@@ -83,10 +86,12 @@ class App extends React.Component {
       this.state.darkMode ? "darkMode" : "lightMode"
     }`;
   }
-  closeEditor = () => {
+  closeEditor = originalSection => {
+    console.log(originalSection);
     this.setState({
       editorIsOpen: false,
-      currentItem: this.blankItemState
+      currentItem: this.blankItemState,
+      selectedSection: originalSection
     });
     document.body.classList.remove("noscroll");
   };
@@ -157,6 +162,11 @@ class App extends React.Component {
     const afterEdit = { ...itemBeforeEdit, [targetId]: newValue };
     this.setState({ currentItem: afterEdit });
   };
+  editCategory = newCat => {
+    const categoryBeforeEdit = { ...this.state.currentItem };
+    const afterEdit = { ...categoryBeforeEdit, category: newCat };
+    this.setState({ currentItem: afterEdit });
+  };
   toggleDarkMode = () => {
     const currentMode = this.state.darkMode;
     this.setState({ darkMode: !currentMode }, () => {
@@ -171,6 +181,7 @@ class App extends React.Component {
   };
   render = () => (
     <>
+      <SimpleHeader user={user} toggleSettings={this.toggleSettings} />
       <Refrigerator
         foodItems={this.state.foodItems}
         category={this.state.selectedSection}
@@ -186,11 +197,14 @@ class App extends React.Component {
         toggleSettings={this.toggleSettings}
       />
       <FoodEditor
+        sectionChange={this.handleSectionChange}
+        currentSection={this.state.selectedSection}
         isOpen={this.state.editorIsOpen}
         closeEditor={this.closeEditor}
         editorMode={this.state.editorMode}
         currentItem={this.state.currentItem}
         editField={this.editField}
+        editCategory={this.editCategory}
         takePhoto={this.takePhoto}
         editDate={this.editDate}
         deleteItemFromEditor={this.deleteItemFromEditor}

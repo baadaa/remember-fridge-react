@@ -5,7 +5,7 @@ import AddFood from "../AddFood/AddFood";
 import { SideNavBar } from "../NavBar/NavBar";
 
 const FridgeShell = styled.main`
-  background: #fff;
+  background: var(--containerBg);
   position: relative;
   max-width: 740px;
   z-index: 1;
@@ -62,7 +62,7 @@ const FridgeShell = styled.main`
 
 const Refrigerator = props => {
   return (
-    <div style={{ position: "relative", display: "flex", marginTop: "30px" }}>
+    <div style={{ position: "relative", display: "flex" }}>
       <FridgeShell>
         <AddFood category={props.category} click={props.openEditor} />
         <div className="container">
@@ -75,12 +75,14 @@ const Refrigerator = props => {
                 img={item.img}
                 quantity={item.quantity}
                 name={item.name}
+                category={item.category}
                 added={item.added}
                 expires={item.expires}
                 deleteThis={props.deleteItem}
                 editThis={props.openEditor}
               />
-            ))}
+            ))
+            .reverse()}
         </div>
       </FridgeShell>
       <SideNavBar

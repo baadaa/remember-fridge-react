@@ -2,7 +2,7 @@
 
 html,
 body {
-  min-height: 100vh;
+  // min-height: 100vh;
   padding: 0;
   margin: 0;
   position: relative;
@@ -22,17 +22,36 @@ body {
 
 .lightMode {
   --bodyBg: #00A2D9;
+  --containerBg: #fff;
   --addButton: #7AB800;
   --content: #222;
-  --settingOverlayBg: rgba(255, 255, 255, 0.95);
+  --settingOverlayBg: #fff;
   --settingsContent: #222;
+  --navBg: #004f6a;
+  --overlayHeading: #202020;
+  --formFieldBg: #eee;
+  --formLabelText: #999;
+  --saveButton: #7ab800;
+  --cancelButton: #7ab800;
+  --removeButton: #B7295A;
+  --removeCancelButton: #B7295A;
 }
 
 .darkMode {
   --bodyBg: #000;
+  --containerBg: #1b1b1b;
+  --addButton: #3f3f3f;
   --content: #f4f4f4;
-  --settingOverlayBg: rgba(0, 0, 0, 0.95);
+  --settingOverlayBg: #1b1b1b;
   --settingsContent: #f4f4f4;
+  --navBg: #3f3f3f;
+  --overlayHeading: #f4f4f4;
+  --formFieldBg: #333;
+  --formLabelText: #999;
+  --saveButton: #7ab800;
+  --cancelButton: #f4f4f4;
+  --removeButton: #B7295A;
+  --removeCancelButton: #f4f4f4;
 }
 
 #freezerSection {
@@ -47,6 +66,7 @@ body {
 
 #root {
   border: 1px solid transparent;
+  position: relative;
 }
 
 .noscroll {

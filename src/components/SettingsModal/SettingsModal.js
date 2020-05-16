@@ -14,6 +14,7 @@ const SettingOverlay = styled.div`
   background: var(--settingOverlayBg);
   color: var(--settingsContent);
   transform: ${props => (props.isOpen ? "translateY(0)" : "translateY(100vh)")};
+  opacity: ${props => (props.isOpen ? "1" : "0")};
   transition: all 0.3s;
 `;
 const SettingsModal = ({ isOpen, closeModal, darkMode, changeColor }) => (
