@@ -86,6 +86,7 @@ const TopSectionWrapper = styled.div`
   }
   label {
     display: flex;
+    cursor: pointer;
     color: var(--uncheckedIconLabel);
     font-size: 14px;
     align-items: center;
@@ -132,7 +133,6 @@ const TopSectionWrapper = styled.div`
 const Form = styled.form`
   max-width: 350px;
   margin: 0 auto;
-  // border: 1px solid blue;
   h2 {
     width: 100%;
     margin: 0;
