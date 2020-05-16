@@ -24,7 +24,7 @@ body {
   --bodyBg: #00A2D9;
   --containerBg: #fff;
   --addButton: #7AB800;
-  --content: #222;
+  --content: #202020;
   --settingOverlayBg: #fff;
   --settingsContent: #222;
   --navBg: #004f6a;
@@ -35,6 +35,9 @@ body {
   --cancelButton: #7ab800;
   --removeButton: #B7295A;
   --removeCancelButton: #B7295A;
+  --checkIconColor: #00a2d9;
+  --checkIconLabel: #202020;
+  --uncheckedIconLabel: #777;
 }
 
 .darkMode {
@@ -52,6 +55,9 @@ body {
   --cancelButton: #f4f4f4;
   --removeButton: #B7295A;
   --removeCancelButton: #f4f4f4;
+  --checkIconColor: #00a2d9;
+  --checkIconLabel: #f4f4f4;
+  --uncheckedIconLabel: #777;
 }
 
 #freezerSection {

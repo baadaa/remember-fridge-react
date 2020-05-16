@@ -86,7 +86,7 @@ const TopSectionWrapper = styled.div`
   }
   label {
     display: flex;
-    color: #000;
+    color: var(--uncheckedIconLabel);
     font-size: 14px;
     align-items: center;
   }
@@ -99,13 +99,15 @@ const TopSectionWrapper = styled.div`
     position: fixed;
     width: 0;
     &:focus + label {
-      border-color: #39b3ca;
+      border-color: var(--checkIconColor);
+      color: var(--checkIconLabel);
     }
     &:checked + label {
-      border-color: #39b3ca;
+      border-color: var(--checkIconColor);
+      color: var(--checkIconLabel);
       .circle {
-        background: #39b3ca;
-        border-color: #39b3ca;
+        background: var(--checkIconColor);
+        border-color: var(--checkIconColor);
       }
     }
     &:checked + label .circle {
@@ -113,7 +115,6 @@ const TopSectionWrapper = styled.div`
       background-size: 11px;
       background-position: center;
       background-repeat: no-repeat;
-      // background-color: #39b3ca;
       border-color: #39b3ca;
       overflow: visible;
     }
@@ -191,7 +192,7 @@ const FieldItem = styled.div`
       height: 47px;
       padding-left: 1rem;
       border: 0;
-      color: #000;
+      color: var(--content);
       border-radius: 7px;
       font-size: 1rem;
     }

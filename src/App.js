@@ -87,7 +87,6 @@ class App extends React.Component {
     }`;
   }
   closeEditor = originalSection => {
-    console.log(originalSection);
     this.setState({
       editorIsOpen: false,
       currentItem: this.blankItemState,
