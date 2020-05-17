@@ -4,9 +4,14 @@ import flatpickr from "flatpickr";
 import blank from "../../img/_.png";
 import styled from "styled-components";
 import photoPrompt from "../../img/add-photo.svg";
+import closeBlack from "../../img/close-black.svg";
+import closeWhite from "../../img/close-white.svg";
+
+const CloseBtn = ({ isDark }) =>
+  isDark ? <img src={closeWhite} alt="" /> : <img src={closeBlack} alt="" />;
 
 const EditorOverlay = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 100;
   background: var(--settingOverlayBg);
   top: 0;
@@ -134,6 +139,7 @@ const TopSectionWrapper = styled.div`
 const Form = styled.form`
   max-width: 350px;
   margin: 0 auto;
+  position: relative;
   h2 {
     width: 100%;
     margin: 0;
@@ -144,8 +150,10 @@ const Form = styled.form`
       text-transform: capitalize;
     }
   }
-  @media screen and (max-width: 456px) {
-    flex-direction: column;
+  button.closeEditor {
+    position: absolute;
+    top: 0px;
+    right: 0px;
   }
 `;
 
@@ -428,7 +436,8 @@ class FoodEditor extends React.Component {
       isOpen,
       editorMode,
       takePhoto,
-      currentSection
+      currentSection,
+      isDark
     } = this.props;
 
     const TopSection = ({ img, takePhoto }) => (
@@ -481,6 +490,9 @@ class FoodEditor extends React.Component {
     return (
       <EditorOverlayWrapper isOpen={isOpen}>
         <EditorForm editorMode={editorMode}>
+          <button className="closeEditor" onClick={this.closeEditor}>
+            <CloseBtn isDark={isDark} />
+          </button>
           <TopSection img={img} takePhoto={takePhoto} />
           <Fields>
             <TextField

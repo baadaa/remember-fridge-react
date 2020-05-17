@@ -113,6 +113,10 @@ class App extends React.Component {
       "myFridgeItems",
       JSON.stringify(this.state.foodItems)
     );
+    window.localStorage.setItem(
+      "myFridgeDarkMode",
+      JSON.stringify(this.state.darkMode)
+    );
   };
   localStorageIsAvailable = () => {
     return window.localStorage.getItem("myFridgeItems") ? true : false;
@@ -122,16 +126,20 @@ class App extends React.Component {
     (function(l){var i,s={touchend:function(){}};for(i in s)l.addEventListener(i,s)})(document); // sticky hover fix in iOS
 
     if (this.localStorageIsAvailable()) {
-      this.setState({
-        foodItems: JSON.parse(window.localStorage.getItem("myFridgeItems"))
-      });
+      this.setState(
+        {
+          foodItems: JSON.parse(window.localStorage.getItem("myFridgeItems")),
+          darkMode: JSON.parse(window.localStorage.getItem("myFridgeDarkMode"))
+        },
+        () => {
+          document.body.className = `${
+            this.state.darkMode ? "darkMode" : "lightMode"
+          }`;
+        }
+      );
     } else {
       this.setLocalStorage();
     }
-
-    document.body.className = `${
-      this.state.darkMode ? "darkMode" : "lightMode"
-    }`;
   }
   saveChanges = () => {
     const beforeChange = this.state.foodItems;
@@ -175,6 +183,7 @@ class App extends React.Component {
       document.body.className = `${
         this.state.darkMode ? "darkMode" : "lightMode"
       }`;
+      this.setLocalStorage();
     });
   };
   toggleSettings = () => {
@@ -213,6 +222,7 @@ class App extends React.Component {
         deleteFromEditor={this.deleteFromEditor}
         saveChanges={this.saveChanges}
         addItem={this.addItem}
+        isDark={this.state.darkMode}
       />
       <SettingsModal
         isOpen={this.state.settingsIsOpen}
