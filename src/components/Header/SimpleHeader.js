@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const HeadWrapper = styled.header`
-  max-width: 740px;
+  max-width: 840px;
   margin: 20px auto;
   position: relative;
   text-align: center;
@@ -10,6 +10,7 @@ const HeadWrapper = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
   height: 45px;
   h1 {
     font-weight: 700;
@@ -29,10 +30,11 @@ const HeadWrapper = styled.header`
     cursor: pointer;
   }
   @media screen and (max-width: 960px) {
-    max-width: 560px;
+    max-width: 660px;
   }
   @media screen and (max-width: 800px) {
     padding-left: 0;
+    max-width: 560px;
   }
   @media screen and (max-width: 570px) {
     max-width: 380px;

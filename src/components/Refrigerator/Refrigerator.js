@@ -10,10 +10,9 @@ const FridgeShell = styled.main`
   max-width: 740px;
   z-index: 1;
   width: 100%;
-  // transform: translateX(50px);
   box-sizing: border-box;
   padding: 25px 15px 0;
-  min-height: 100vh;
+  min-height: calc(100vh - 85px);
   border-radius: 20px 20px 0 0;
   margin: 0 auto 0 0;
   transition: transform 0.3s;
