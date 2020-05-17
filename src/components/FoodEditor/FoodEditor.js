@@ -36,6 +36,7 @@ const PhotoInput = styled.div`
   height: 150px;
   background-color: #fff;
   border: 1px solid #c8c8c8;
+  border-color: ${props => (props.missing ? "var(--missingField)" : "#c8c8c8")};
   background-image: url(${photoPrompt});
   background-size: inherit;
   cursor: pointer;
@@ -185,6 +186,8 @@ const FieldItem = styled.div`
     background: var(--formFieldBg);
     flex: 1;
     border-radius: 4px;
+    box-sizing: border-box;
+    border: ${props => (props.missing ? "1px solid var(--missingField)" : "")};
     input {
       box-sizing: border-box;
       background: rgba(0, 0, 0, 0);
@@ -199,8 +202,15 @@ const FieldItem = styled.div`
   }
 `;
 
-const TextField = ({ labelText, id, value, editField, isRequired }) => (
-  <FieldItem>
+const TextField = ({
+  labelText,
+  id,
+  value,
+  editField,
+  isRequired,
+  nameMissing
+}) => (
+  <FieldItem missing={nameMissing}>
     <label htmlFor={id}>
       {labelText}
       <span className="req" style={{ display: !isRequired ? "none" : "" }}>
@@ -221,16 +231,22 @@ const TextField = ({ labelText, id, value, editField, isRequired }) => (
 );
 
 const DateField = React.forwardRef((props, ref) => {
-  const { labelText, id, value, isRequired } = props;
+  const { labelText, id, value, isRequired, dateMissing } = props;
   return (
-    <FieldItem>
+    <FieldItem isRequired={isRequired} missing={dateMissing}>
       <label htmlFor={id}>
         {labelText}
         <span className="req" style={{ display: !isRequired ? "none" : "" }}>
           *
         </span>
       </label>
-      <div className="inputStyle">
+      <div
+        className="inputStyle"
+        style={{
+          border:
+            isRequired && props.missing ? "1px solid var(--missingField)" : ""
+        }}
+      >
         <input
           className="flatpickr-input form-control input"
           placeholder={labelText}
@@ -314,11 +330,23 @@ const ButtonBlock = styled.div`
       text-decoration: underline;
     }
   }
+  .errorMsg {
+    display: block;
+    flex-basis: 100%;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 700;
+
+    color: var(--missingField);
+  }
 `;
 
 class FoodEditor extends React.Component {
   state = {
-    isRemoving: false
+    isRemoving: false,
+    nameMissing: false,
+    addedDateMissing: false,
+    error: false
   };
   addDatePicker = React.createRef();
   expDatePicker = React.createRef();
@@ -329,13 +357,26 @@ class FoodEditor extends React.Component {
       editorLaunchedIn !== currentFridgeState
         ? editorLaunchedIn
         : currentFridgeState;
+    this.resetMissing();
     this.props.closeEditor(closingAs);
   };
   onChangeDate = (selectedDates, dateStr, instance) => {
+    this.setState({ addedDateMissing: false, error: false });
     this.props.editDate(dateStr, instance.element.id);
   };
   deleteFromEditor = () => {
     this.props.deleteFromEditor();
+  };
+  resetMissing = () => {
+    this.setState({
+      nameMissing: false,
+      addedDateMissing: false,
+      error: false
+    });
+  };
+  editField = item => {
+    this.resetMissing();
+    this.props.editField(item);
   };
   componentDidMount() {
     flatpickr(this.addDatePicker.current, {
@@ -351,6 +392,30 @@ class FoodEditor extends React.Component {
     this.props.sectionChange(e.target);
     this.props.editCategory(e.target.value);
   };
+  takePhoto = e => {
+    this.resetMissing();
+    this.props.takePhoto(e);
+  };
+  validate = e => {
+    const mode = e.target.dataset.mode;
+    const {
+      currentItem: { img = "", name = "", added = "" }
+    } = this.props;
+    if (img === "" && name === "") {
+      this.setState({ nameMissing: true, error: true });
+      return;
+    }
+    if (added === "") {
+      this.setState({ addedDateMissing: true, error: true });
+      return;
+    }
+    this.resetMissing();
+    if (mode === "edit") {
+      this.props.saveChanges();
+    } else {
+      this.props.addItem();
+    }
+  };
   render() {
     const {
       currentItem: {
@@ -363,15 +428,12 @@ class FoodEditor extends React.Component {
       isOpen,
       editorMode,
       takePhoto,
-      currentSection,
-      editField,
-      saveChanges,
-      addItem
+      currentSection
     } = this.props;
 
     const TopSection = ({ img, takePhoto }) => (
       <TopSectionWrapper>
-        <PhotoInput>
+        <PhotoInput missing={this.state.nameMissing}>
           <label>
             <input
               type="file"
@@ -379,7 +441,7 @@ class FoodEditor extends React.Component {
               name="img"
               accept="image/*"
               placeholder=""
-              onChange={takePhoto}
+              onChange={this.takePhoto}
             />
             <img src={img === "" ? blank : img} alt="" />
           </label>
@@ -424,14 +486,15 @@ class FoodEditor extends React.Component {
             <TextField
               id="name"
               labelText="Item name"
-              editField={editField}
+              editField={this.editField}
               value={name}
               isRequired={true}
+              nameMissing={this.state.nameMissing}
             />
             <TextField
               id="quantity"
               labelText="Quantity"
-              editField={editField}
+              editField={this.editField}
               value={quantity}
             />
             <DateField
@@ -440,6 +503,7 @@ class FoodEditor extends React.Component {
               isRequired={true}
               value={added}
               ref={this.addDatePicker}
+              missing={this.state.addedDateMissing}
             />
             <DateField
               id="expires"
@@ -447,13 +511,14 @@ class FoodEditor extends React.Component {
               isRequired={false}
               value={expires}
               ref={this.expDatePicker}
+              missing={false}
             />
           </Fields>
           <ButtonBlock
             isRemoving={this.state.isRemoving}
             className={editorMode === "edit" ? "active" : ""}
           >
-            <button className="save" onClick={saveChanges}>
+            <button className="save" data-mode="edit" onClick={this.validate}>
               Save
             </button>
             <button className="cancel" onClick={this.closeEditor}>
@@ -482,12 +547,20 @@ class FoodEditor extends React.Component {
             </button>
           </ButtonBlock>
           <ButtonBlock className={editorMode === "add" ? "active" : ""}>
-            <button className="save" onClick={addItem}>
+            <button className="save" data-mode="add" onClick={this.validate}>
               Add item
             </button>
             <button className="cancel" onClick={this.closeEditor}>
               Cancel
             </button>
+            <span
+              className="errorMsg"
+              style={{ display: this.state.error ? "block" : "none" }}
+            >
+              {this.state.nameMissing
+                ? "Please provide a name or a photo."
+                : "Please provide added date."}
+            </span>
           </ButtonBlock>
         </EditorForm>
       </EditorOverlayWrapper>

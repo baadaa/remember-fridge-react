@@ -38,6 +38,7 @@ body {
   --checkIconColor: #00a2d9;
   --checkIconLabel: #202020;
   --uncheckedIconLabel: #777;
+  --missingField: #b7295a;
 }
 
 .darkMode {
@@ -58,6 +59,7 @@ body {
   --checkIconColor: #00a2d9;
   --checkIconLabel: #f4f4f4;
   --uncheckedIconLabel: #777;
+  --missingField: #f2a328;
 }
 
 #root {
