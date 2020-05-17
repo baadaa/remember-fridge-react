@@ -11,7 +11,7 @@ const CloseBtn = ({ isDark }) =>
   isDark ? <img src={closeWhite} alt="" /> : <img src={closeBlack} alt="" />;
 
 const EditorOverlay = styled.div`
-  position: fixed;
+  position: absolute;
   z-index: 100;
   background: var(--settingOverlayBg);
   top: 0;
