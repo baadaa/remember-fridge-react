@@ -362,6 +362,7 @@ class FoodEditor extends React.Component {
         ? editorLaunchedIn
         : currentFridgeState;
     this.resetMissing();
+    this.setState({ isRemoving: false });
     this.props.closeEditor(closingAs);
   };
   onChangeDate = (selectedDates, dateStr, instance) => {
