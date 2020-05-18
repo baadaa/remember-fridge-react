@@ -39,15 +39,17 @@ class App extends React.Component {
     this.setState({ activeArea: targetArea });
   };
   openEditor = item => {
-    this.setState({
+    const launchData = {
       editorIsOpen: true,
-      editorLaunchIn: this.state.activeArea
+      editorLaunchIn: this.state.activeArea,
+      currentItem: item.id ? item : this.state.currentItem,
+      editorMode: item.id ? "edit" : "add"
+    };
+    this.setState({ ...launchData }, () => {
+      window.scrollTo({
+        top: 0
+      });
     });
-    if (item.id) {
-      this.setState({ currentItem: item, editorMode: "edit" });
-    } else {
-      this.setState({ editorMode: "add" });
-    }
   };
   closeEditor = closingAs => {
     this.setState({
