@@ -4,11 +4,7 @@ import flatpickr from "flatpickr";
 import blank from "../../img/_.png";
 import styled from "styled-components";
 import photoPrompt from "../../img/add-photo.svg";
-import closeBlack from "../../img/close-black.svg";
-import closeWhite from "../../img/close-white.svg";
-
-const CloseBtn = ({ isDark }) =>
-  isDark ? <img src={closeWhite} alt="" /> : <img src={closeBlack} alt="" />;
+import CloseButton from "../UIElements/CloseButton";
 
 const EditorOverlay = styled.div`
   position: absolute;
@@ -490,8 +486,12 @@ class FoodEditor extends React.Component {
     return (
       <EditorOverlayWrapper isOpen={isOpen}>
         <EditorForm editorMode={editorMode}>
-          <button className="closeEditor" onClick={this.closeEditor}>
-            <CloseBtn isDark={isDark} />
+          <button
+            className="closeEditor closeModal"
+            style={{ background: "transparent", border: "none" }}
+            onClick={this.closeEditor}
+          >
+            <CloseButton isDark={isDark} />
           </button>
           <TopSection img={img} takePhoto={takePhoto} />
           <Fields>

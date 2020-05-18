@@ -39,6 +39,11 @@ body {
   --checkIconLabel: #202020;
   --uncheckedIconLabel: #777;
   --missingField: #b7295a;
+  --disabledButtonBg: #eee;
+  --disabledButtonColor: #999;
+  --modalSubsectionBg: #FFF1F6;
+  --modalSubsectionBorder: #b7295a;
+  --modalSubsectionText: #333;
 }
 
 .darkMode {
@@ -60,6 +65,11 @@ body {
   --checkIconLabel: #f4f4f4;
   --uncheckedIconLabel: #777;
   --missingField: #f2a328;
+  --disabledButtonBg: #eee;
+  --disabledButtonColor: #999;
+  --modalSubsectionBg: #333;
+  --modalSubsectionBorder: #f2a328;
+  --modalSubsectionText: #f2a328;
 }
 
 #root {
