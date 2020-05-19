@@ -3,7 +3,6 @@ import axios from "axios";
 
 import SimpleHeader from "./components/Header/SimpleHeader";
 import Refrigerator from "./components/Refrigerator/Refrigerator";
-// import foodItems from "./components/sampleData/sampleData";
 import user from "./components/sampleData/sampleUser";
 
 import FoodEditor from "./components/FoodEditor/FoodEditor";

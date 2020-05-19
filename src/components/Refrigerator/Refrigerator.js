@@ -16,11 +16,10 @@ const FridgeShell = styled.main`
   min-height: calc(100vh - 85px);
   border-radius: 20px 20px 0 0;
   margin: 0 auto 0 0;
-  transition: transform 0.3s;
+  transition: all 0.3s;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   .container {
     max-width: 675px;
-    // position: relative;
     box-sizing: border-box;
     margin: 0 auto;
     display: grid;
@@ -29,6 +28,7 @@ const FridgeShell = styled.main`
     grid-auto-flow: row;
     grid-gap: 24px;
     padding-bottom: 40px;
+    transition: all 0.3s;
     @media screen and (max-width: 375px) {
       grid-template-columns: repeat(auto-fill, 140px);
       grid-template-rows: 140px;

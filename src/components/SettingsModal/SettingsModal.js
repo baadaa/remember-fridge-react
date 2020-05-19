@@ -32,6 +32,7 @@ const SettingOverlay = styled.div`
       margin-bottom: 1.5em;
       text-align: center;
       color: var(--overlayHeading);
+      transition: color 0.3s;
       span {
         text-transform: capitalize;
       }
