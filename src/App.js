@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 import SimpleHeader from "./components/Header/SimpleHeader";
 import Refrigerator from "./components/Refrigerator/Refrigerator";
@@ -192,6 +193,21 @@ class App extends React.Component {
     const isOpen = this.state.settingsIsOpen;
     this.setState({ settingsIsOpen: !isOpen });
   };
+  loadSamples = () => {
+    axios.get("/sampleData.json").then(
+      res => {
+        this.setState({ foodItems: res.data, settingsIsOpen: false });
+      },
+      () => {
+        this.setLocalStorage();
+      }
+    );
+  };
+  deleteAll = () => {
+    this.setState({ foodItems: [], settingsIsOpen: false }, () =>
+      this.setLocalStorage()
+    );
+  };
   render = () => (
     <>
       <SimpleHeader user={user} toggleSettings={this.toggleSettings} />
@@ -231,6 +247,8 @@ class App extends React.Component {
         closeModal={this.toggleSettings}
         darkMode={this.state.darkMode}
         changeColor={this.toggleDarkMode}
+        loadSamples={this.loadSamples}
+        deleteAll={this.deleteAll}
       />
     </>
   );

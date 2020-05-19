@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+
 import CloseButton from "../UIElements/CloseButton";
 import googleG from "../../img/google-g.svg";
 
@@ -210,7 +211,15 @@ const SettingOverlay = styled.div`
     border: 1px solid var(--removeButton);
   }
 `;
-const SettingsModal = ({ isOpen, closeModal, darkMode, changeColor }) => (
+
+const SettingsModal = ({
+  isOpen,
+  closeModal,
+  darkMode,
+  changeColor,
+  loadSamples,
+  deleteAll
+}) => (
   <SettingOverlay isOpen={isOpen}>
     <div className="wrapper">
       <h2>Settings</h2>
@@ -286,8 +295,12 @@ const SettingsModal = ({ isOpen, closeModal, darkMode, changeColor }) => (
           These actions will overwrite your existing data, and cannot be undone.
         </p>
         <div className="buttons">
-          <button className="small loadSamples">Load sample data</button>
-          <button className="small removeAll">Delete everything</button>
+          <button className="small loadSamples" onClick={loadSamples}>
+            Load sample data
+          </button>
+          <button className="small removeAll" onClick={deleteAll}>
+            Delete everything
+          </button>
         </div>
       </div>
     </div>
