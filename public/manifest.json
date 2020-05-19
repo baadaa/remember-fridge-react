@@ -7,14 +7,14 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "app-icon.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "120x120"
     },
     {
-      "src": "logo512.png",
+      "src": "tile.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "558x558"
     }
   ],
   "start_url": ".",
