@@ -219,92 +219,100 @@ const SettingsModal = ({
   changeColor,
   loadSamples,
   deleteAll
-}) => (
-  <SettingOverlay isOpen={isOpen}>
-    <div className="wrapper">
-      <h2>Settings</h2>
-      <button
-        className="closeModal"
-        onClick={closeModal}
-        style={{ background: "transparent", border: "none" }}
-      >
-        <CloseButton isDark={darkMode} />
-      </button>
-      <form onSubmit={e => e.preventDefault} className="settings">
-        <div className="fieldRow">
-          <h3>Color Mode</h3>
-          <span className="option">
-            <input
-              type="radio"
-              id="light"
-              name="colorMode"
-              value="light"
-              checked={!darkMode}
-              onChange={changeColor}
-            />
-            <label htmlFor="light">
-              <span className="circle"></span>
-              Light
-            </label>
-          </span>
-          <span className="option">
-            <input
-              type="radio"
-              id="dark"
-              name="colorMode"
-              value="dark"
-              checked={darkMode}
-              onChange={changeColor}
-            />
-            <label htmlFor="dark">
-              <span className="circle"></span>
-              Dark
-            </label>
-          </span>
-        </div>
-        <div className="fieldRow">
-          <h3>Data Storage</h3>
-          <span className="singleOption">
-            <input
-              type="checkbox"
-              id="cloud"
-              name="dataStorage"
-              value="cloud"
-              disabled={true}
-              // checked={!darkMode}
-              // onChange={changeColor}
-            />
-            <label htmlFor="cloud">
-              <span className="square"></span>
-              Enable Cloud Storage
-            </label>
-            <button className="google" disabled={true}>
-              <img src={googleG} alt="" />
-              Sign in with Google
+}) => {
+  if (darkMode) {
+    document.body.className = "darkMode";
+  } else {
+    document.body.className = "lightMode";
+  }
+  return (
+    <SettingOverlay isOpen={isOpen}>
+      <div className="wrapper">
+        <h2>Settings</h2>
+        <button
+          className="closeModal"
+          onClick={closeModal}
+          style={{ background: "transparent", border: "none" }}
+        >
+          <CloseButton isDark={darkMode} />
+        </button>
+        <form onSubmit={e => e.preventDefault} className="settings">
+          <div className="fieldRow">
+            <h3>Color Mode</h3>
+            <span className="option">
+              <input
+                type="radio"
+                id="light"
+                name="colorMode"
+                value="light"
+                checked={!darkMode}
+                onChange={changeColor}
+              />
+              <label htmlFor="light">
+                <span className="circle"></span>
+                Light
+              </label>
+            </span>
+            <span className="option">
+              <input
+                type="radio"
+                id="dark"
+                name="colorMode"
+                value="dark"
+                checked={darkMode}
+                onChange={changeColor}
+              />
+              <label htmlFor="dark">
+                <span className="circle"></span>
+                Dark
+              </label>
+            </span>
+          </div>
+          <div className="fieldRow">
+            <h3>Data Storage</h3>
+            <span className="singleOption">
+              <input
+                type="checkbox"
+                id="cloud"
+                name="dataStorage"
+                value="cloud"
+                disabled={true}
+                // checked={!darkMode}
+                // onChange={changeColor}
+              />
+              <label htmlFor="cloud">
+                <span className="square"></span>
+                Enable Cloud Storage
+              </label>
+              <button className="google" disabled={true}>
+                <img src={googleG} alt="" />
+                Sign in with Google
+              </button>
+              <span className="dev-note">Development in progress</span>
+            </span>
+          </div>
+        </form>
+        <button className="big" onClick={closeModal}>
+          Save and close
+        </button>
+        <div className="data-reset">
+          <h4>Reset your data</h4>
+          <p>
+            These actions will overwrite your existing data, and cannot be
+            undone.
+          </p>
+          <div className="buttons">
+            <button className="small loadSamples" onClick={loadSamples}>
+              Load sample data
             </button>
-            <span className="dev-note">Development in progress</span>
-          </span>
-        </div>
-      </form>
-      <button className="big" onClick={closeModal}>
-        Save and close
-      </button>
-      <div className="data-reset">
-        <h4>Reset your data</h4>
-        <p>
-          These actions will overwrite your existing data, and cannot be undone.
-        </p>
-        <div className="buttons">
-          <button className="small loadSamples" onClick={loadSamples}>
-            Load sample data
-          </button>
-          <button className="small removeAll" onClick={deleteAll}>
-            Delete everything
-          </button>
+            <button className="small removeAll" onClick={deleteAll}>
+              Delete everything
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </SettingOverlay>
-);
+    </SettingOverlay>
+  );
+};
 
 export default SettingsModal;

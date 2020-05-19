@@ -183,9 +183,6 @@ class App extends React.Component {
   toggleDarkMode = () => {
     const currentMode = this.state.darkMode;
     this.setState({ darkMode: !currentMode }, () => {
-      document.body.className = `${
-        this.state.darkMode ? "darkMode" : "lightMode"
-      }`;
       this.setLocalStorage();
     });
   };
