@@ -4,6 +4,11 @@ import flatpickr from "flatpickr";
 import blank from "../../img/_.png";
 import styled from "styled-components";
 import photoPrompt from "../../img/add-photo.svg";
+import yes from "../../img/yes.svg";
+import noKo from "../../img/no-white.svg";
+import noGr from "../../img/no-green.svg";
+import trash from "../../img/trash.svg";
+
 import CloseButton from "../UIElements/CloseButton";
 
 const EditorOverlay = styled.div`
@@ -290,6 +295,9 @@ const ButtonBlock = styled.div`
     font-size: 14px;
     font-weight: 700;
     flex-basis: 48%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transition: opacity 0.3s, transform 0.3s;
     &.save {
       background: var(--saveButton);
@@ -297,6 +305,11 @@ const ButtonBlock = styled.div`
         !props.isRemoving ? "translateY(0)" : "translateY(45px)"};
       opacity: ${props => (!props.isRemoving ? 1 : 0)};
       pointer-events: ${props => (!props.isRemoving ? "all" : "none")};
+      img.yes {
+        width: 12px;
+        height: 9px;
+        margin-right: 5px;
+      }
     }
     &.cancel {
       background: transparent;
@@ -306,6 +319,11 @@ const ButtonBlock = styled.div`
         !props.isRemoving ? "translateY(0)" : "translateY(45px)"};
       opacity: ${props => (!props.isRemoving ? 1 : 0)};
       pointer-events: ${props => (!props.isRemoving ? "all" : "none")};
+      img.no {
+        width: 10px;
+        height: 10px;
+        margin-right: 5px;
+      }
     }
     &.remove {
       transform: ${props =>
@@ -313,6 +331,11 @@ const ButtonBlock = styled.div`
       opacity: ${props => (props.isRemoving ? 1 : 0)};
       pointer-events: ${props => (props.isRemoving ? "all" : "none")};
       background: var(--removeButton);
+      img.trash {
+        width: 14px;
+        height: 15px;
+        margin-right: 5px;
+      }
     }
     &.cancelRemoval {
       transform: ${props =>
@@ -532,13 +555,15 @@ class FoodEditor extends React.Component {
             className={editorMode === "edit" ? "active" : ""}
           >
             <button className="save" data-mode="edit" onClick={this.validate}>
-              Save
+              <img src={yes} className="yes" alt="" /> Save
             </button>
             <button className="cancel" onClick={this.closeEditor}>
+              <img src={isDark ? noKo : noGr} className="no" alt="" />
               Cancel
             </button>
             <button className="remove" onClick={this.deleteFromEditor}>
-              Remove it
+              <img src={trash} className="trash" alt="" />
+              Remove
             </button>
             <button
               className="cancelRemoval"
@@ -561,9 +586,10 @@ class FoodEditor extends React.Component {
           </ButtonBlock>
           <ButtonBlock className={editorMode === "add" ? "active" : ""}>
             <button className="save" data-mode="add" onClick={this.validate}>
-              Add item
+              <img src={yes} className="yes" alt="" /> Add item
             </button>
             <button className="cancel" onClick={this.closeEditor}>
+              <img src={isDark ? noKo : noGr} className="no" alt="" />
               Cancel
             </button>
             <span

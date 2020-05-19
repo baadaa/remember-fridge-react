@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import CloseButton from "../UIElements/CloseButton";
 import googleG from "../../img/google-g.svg";
+import yes from "../../img/yes.svg";
 
 const SettingOverlay = styled.div`
   position: fixed;
@@ -202,6 +203,11 @@ const SettingOverlay = styled.div`
     margin-left: 90px;
     width: calc(100% - 90px);
     margin-top: 15px;
+    img.yes {
+      width: 12px;
+      height: 9px;
+      margin-right: 5px;
+    }
   }
   button.small {
     flex-basis: 48%;
@@ -294,7 +300,7 @@ const SettingsModal = ({
           </div>
         </form>
         <button className="big" onClick={closeModal}>
-          Save and close
+          <img src={yes} className="yes" alt="" /> Save and close
         </button>
         <div className="data-reset">
           <h4>Reset your data</h4>
