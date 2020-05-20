@@ -190,14 +190,11 @@ class App extends React.Component {
     this.setState({ settingsIsOpen: !isOpen });
   };
   loadSamples = () => {
-    axios.get("/sampleData.json").then(
-      res => {
-        this.setState({ foodItems: res.data, settingsIsOpen: false });
-      },
-      () => {
+    axios.get("/sampleData.json").then(res => {
+      this.setState({ foodItems: res.data, settingsIsOpen: false }, () => {
         this.setLocalStorage();
-      }
-    );
+      });
+    });
   };
   deleteAll = () => {
     this.setState({ foodItems: [], settingsIsOpen: false }, () =>
