@@ -74,6 +74,7 @@ const SettingOverlay = styled.div`
     }
     &[disabled] + label {
       color: #999;
+      cursor: default;
     }
   }
 
@@ -116,9 +117,11 @@ const SettingOverlay = styled.div`
   .singleOption {
     border-radius: 4px 0 0 4px;
     flex: 1;
-    // text-align: center;
     background: var(--formFieldBg);
     padding: 10px 0 10px 20px;
+    label {
+      cursor: pointer;
+    }
     &:nth-of-type(2) {
       border-radius: 0 4px 4px 0;
       padding-left: 0;
