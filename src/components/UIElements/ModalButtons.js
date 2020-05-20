@@ -7,8 +7,20 @@ import noKo from "../../img/no-white.svg";
 import noGr from "../../img/no-green.svg";
 import trash from "../../img/trash.svg";
 
-const CloseButton = ({ isDark }) =>
-  isDark ? <img src={closeWhite} alt="" /> : <img src={closeBlack} alt="" />;
+const CloseButton = props => (
+  <button
+    onClick={props.click}
+    style={{
+      background: "transparent",
+      border: "none",
+      position: "absolute",
+      top: 0,
+      right: 0
+    }}
+  >
+    <img src={props.isDark ? closeWhite : closeBlack} alt="" />
+  </button>
+);
 
 const BaseBigButton = styled.button`
   border: none;
@@ -73,6 +85,18 @@ const CancelRemoval = styled(BaseBigButton)`
   border: 1px solid var(--removeCancelButton);
   color: var(--removeCancelButton);
 `;
+const SaveSettings = styled(BaseBigButton)`
+  background: var(--saveButton);
+  color: #fff;
+  margin-left: 90px;
+  width: calc(100% - 90px);
+  margin-top: 15px;
+  img {
+    width: 12px;
+    height: 9px;
+    margin-right: 5px;
+  }
+`;
 const RemovePrompt = styled.button`
   border: none;
   outline: none;
@@ -121,11 +145,17 @@ const RemovePromptButton = props => (
     {props.isRemoving ? "This action cannot be undone." : "Remove this item"}
   </RemovePrompt>
 );
+const SaveSettingsButton = props => (
+  <SaveSettings onClick={props.click}>
+    <img src={yes} alt="" /> Save and close
+  </SaveSettings>
+);
 export {
   CloseButton,
   SaveButton,
   CancelButton,
   RemoveButton,
   CancelRemovalButton,
-  RemovePromptButton
+  RemovePromptButton,
+  SaveSettingsButton
 };

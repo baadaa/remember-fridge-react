@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import CloseButton from "../UIElements/CloseButton";
 import googleG from "../../img/google-g.svg";
-import yes from "../../img/yes.svg";
+import { CloseButton, SaveSettingsButton } from "../UIElements/ModalButtons";
 
 const SettingOverlay = styled.div`
   position: fixed;
@@ -38,11 +37,6 @@ const SettingOverlay = styled.div`
         text-transform: capitalize;
       }
     }
-  }
-  button.closeModal {
-    position: absolute;
-    top: 0px;
-    right: 0px;
   }
 
   input[type="radio"],
@@ -191,27 +185,6 @@ const SettingOverlay = styled.div`
       }
     }
   }
-  button.big {
-    border: none;
-    outline: none;
-    border-radius: 30px;
-    padding: 10px 20px;
-    height: 45px;
-    font-size: 14px;
-    font-weight: 700;
-    flex-basis: 48%;
-    transition: opacity 0.3s, transform 0.3s;
-    background: var(--saveButton);
-    color: #fff;
-    margin-left: 90px;
-    width: calc(100% - 90px);
-    margin-top: 15px;
-    img.yes {
-      width: 12px;
-      height: 9px;
-      margin-right: 5px;
-    }
-  }
   button.small {
     flex-basis: 48%;
     border-radius: 5px;
@@ -239,13 +212,7 @@ const SettingsModal = ({
     <SettingOverlay isOpen={isOpen}>
       <div className="wrapper">
         <h2>Settings</h2>
-        <button
-          className="closeModal"
-          onClick={closeModal}
-          style={{ background: "transparent", border: "none" }}
-        >
-          <CloseButton isDark={darkMode} />
-        </button>
+        <CloseButton click={closeModal} isDark={darkMode} />
         <form onSubmit={e => e.preventDefault} className="settings">
           <div className="fieldRow">
             <h3>Color Mode</h3>
@@ -302,9 +269,7 @@ const SettingsModal = ({
             </span>
           </div>
         </form>
-        <button className="big" onClick={closeModal}>
-          <img src={yes} className="yes" alt="" /> Save and close
-        </button>
+        <SaveSettingsButton click={closeModal} />
         <div className="data-reset">
           <h4>Reset your data</h4>
           <p>

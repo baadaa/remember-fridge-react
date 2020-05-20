@@ -154,11 +154,6 @@ const Form = styled.form`
       text-transform: capitalize;
     }
   }
-  button.closeEditor {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-  }
 `;
 
 const EditorForm = ({ editorMode, children }) => (
@@ -443,13 +438,7 @@ class FoodEditor extends React.Component {
     return (
       <EditorOverlayWrapper isOpen={isOpen}>
         <EditorForm editorMode={editorMode}>
-          <button
-            className="closeEditor closeModal"
-            style={{ background: "transparent", border: "none" }}
-            onClick={this.closeEditor}
-          >
-            <CloseButton isDark={isDark} />
-          </button>
+          <CloseButton click={this.closeEditor} isDark={isDark} />
           <TopSection img={img} takePhoto={takePhoto} />
           <Fields>
             <TextField
