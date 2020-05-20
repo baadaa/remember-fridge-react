@@ -126,7 +126,8 @@ const Refrigerator = ({
   deleteItem,
   currentSection,
   sectionChange,
-  toggleSettings
+  toggleSettings,
+  toggleList
 }) => {
   const itemsInTheCategory = foodItems
     .filter(food => food.category === category)
@@ -162,6 +163,7 @@ const Refrigerator = ({
         currentSection={currentSection}
         sectionChange={sectionChange}
         toggleSettings={toggleSettings}
+        toggleList={toggleList}
       />
     </div>
   );

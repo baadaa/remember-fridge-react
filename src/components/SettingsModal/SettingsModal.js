@@ -24,7 +24,6 @@ const SettingOverlay = styled.div`
   opacity: ${props => (props.isOpen ? "1" : "0")};
   transition: all 0.3s;
   .wrapper {
-    font-size: 0.75rem;
     max-width: 350px;
     margin: 0 auto;
     position: relative;
@@ -41,6 +40,9 @@ const SettingOverlay = styled.div`
         text-transform: capitalize;
       }
     }
+  }
+  .settings {
+    font-size: 0.75rem;
   }
 
   input[type="radio"],

@@ -3,6 +3,8 @@ import axios from "axios";
 
 import SimpleHeader from "./components/Header/SimpleHeader";
 import Refrigerator from "./components/Refrigerator/Refrigerator";
+import ShoppingList from "./components/ShoppingList/ShoppingList";
+
 import user from "./components/sampleData/sampleUser";
 
 import FoodEditor from "./components/FoodEditor/FoodEditor";
@@ -26,6 +28,7 @@ class App extends React.Component {
     darkMode: false,
     editorIsOpen: false,
     settingsIsOpen: false,
+    listIsOpen: false,
     currentItem: this.blankItemState,
     foodItems: [],
     editorMode: "add"
@@ -189,6 +192,10 @@ class App extends React.Component {
     const isOpen = this.state.settingsIsOpen;
     this.setState({ settingsIsOpen: !isOpen });
   };
+  toggleList = () => {
+    const isOpen = this.state.listIsOpen;
+    this.setState({ listIsOpen: !isOpen });
+  };
   loadSamples = () => {
     axios.get("/sampleData.json").then(res => {
       this.setState({ foodItems: res.data, settingsIsOpen: false }, () => {
@@ -212,11 +219,13 @@ class App extends React.Component {
         currentSection={this.state.activeArea}
         sectionChange={this.handleNavigation}
         toggleSettings={this.toggleSettings}
+        toggleList={this.toggleList}
       />
       <BottomNavBar
         currentSection={this.state.activeArea}
         sectionChange={this.handleNavigation}
         toggleSettings={this.toggleSettings}
+        toggleList={this.toggleList}
       />
       <FoodEditor
         sectionChange={this.handleEditorRadioButtons}
@@ -242,6 +251,11 @@ class App extends React.Component {
         changeColor={this.toggleDarkMode}
         loadSamples={this.loadSamples}
         deleteAll={this.deleteAll}
+      />
+      <ShoppingList
+        isOpen={this.state.listIsOpen}
+        isDark={this.state.darkMode}
+        closeList={this.toggleList}
       />
     </>
   );

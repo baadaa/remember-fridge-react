@@ -113,7 +113,12 @@ const SideNav = styled.nav`
     display: none;
   }
 `;
-const BottomNavBar = ({ currentSection, sectionChange, toggleSettings }) => (
+const BottomNavBar = ({
+  currentSection,
+  sectionChange,
+  toggleSettings,
+  toggleList
+}) => (
   <BottomNav>
     <div className="BottomNav">
       <button
@@ -140,7 +145,7 @@ const BottomNavBar = ({ currentSection, sectionChange, toggleSettings }) => (
         />
         Freezer
       </button>
-      <button>
+      <button onClick={toggleList}>
         <img style={{ width: "30px", height: "34px" }} src={listIcon} alt="" />
         Shopping List
       </button>
@@ -155,7 +160,12 @@ const BottomNavBar = ({ currentSection, sectionChange, toggleSettings }) => (
     </div>
   </BottomNav>
 );
-const SideNavBar = ({ currentSection, sectionChange, toggleSettings }) => {
+const SideNavBar = ({
+  currentSection,
+  sectionChange,
+  toggleSettings,
+  toggleList
+}) => {
   return (
     <SideNav>
       <button
@@ -182,7 +192,7 @@ const SideNavBar = ({ currentSection, sectionChange, toggleSettings }) => {
         />
         Freezer
       </button>
-      <button>
+      <button onClick={e => toggleList(e)}>
         <img style={{ width: "30px", height: "34px" }} src={listIcon} alt="" />
         Shopping List
       </button>
