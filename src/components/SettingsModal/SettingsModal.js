@@ -2,7 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 import googleG from "../../img/google-g.svg";
-import { CloseButton, SaveSettingsButton } from "../UIElements/ModalButtons";
+import {
+  CloseButton,
+  SaveSettingsButton,
+  DataResetButton
+} from "../UIElements/ModalButtons";
 
 const SettingOverlay = styled.div`
   position: fixed;
@@ -172,26 +176,6 @@ const SettingOverlay = styled.div`
       font-size: 12px;
       font-weight: 700;
     }
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-      .loadSamples {
-        color: var(--removeButton);
-        background: #fff;
-      }
-      .removeAll {
-        color: #fff;
-        background: var(--removeButton);
-      }
-    }
-  }
-  button.small {
-    flex-basis: 48%;
-    border-radius: 5px;
-    font-weight: 700;
-    font-size: 13px;
-    padding: 10px;
-    border: 1px solid var(--removeButton);
   }
 `;
 
@@ -276,13 +260,9 @@ const SettingsModal = ({
             These actions will overwrite your existing data, and cannot be
             undone.
           </p>
-          <div className="buttons">
-            <button className="small loadSamples" onClick={loadSamples}>
-              Load sample data
-            </button>
-            <button className="small removeAll" onClick={deleteAll}>
-              Delete everything
-            </button>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <DataResetButton type="load" click={loadSamples} />
+            <DataResetButton type="delete" click={deleteAll} />
           </div>
         </div>
       </div>

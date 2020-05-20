@@ -113,6 +113,17 @@ const RemovePrompt = styled.button`
   display: ${props => (props.mode === "edit" ? "flex" : "none")};
   font-weight: 700;
 `;
+const DataReset = styled.button`
+  flex-basis: 48%;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 10px;
+  border: 1px solid var(--removeButton);
+  color: ${props => (props.type === "load" ? "var(--removeButton)" : "#fff")};
+  background: ${props =>
+    props.type === "load" ? "#fff" : "var(--removeButton)"};
+`;
 const SaveButton = props => (
   <Save data-mode="edit" onClick={props.click} isRemoving={props.isRemoving}>
     <img src={yes} alt="" />
@@ -150,6 +161,11 @@ const SaveSettingsButton = props => (
     <img src={yes} alt="" /> Save and close
   </SaveSettings>
 );
+const DataResetButton = props => (
+  <DataReset onClick={props.click} type={props.type}>
+    {props.type === "load" ? "Load sample data" : "Delete everything"}
+  </DataReset>
+);
 export {
   CloseButton,
   SaveButton,
@@ -157,5 +173,6 @@ export {
   RemoveButton,
   CancelRemovalButton,
   RemovePromptButton,
-  SaveSettingsButton
+  SaveSettingsButton,
+  DataResetButton
 };

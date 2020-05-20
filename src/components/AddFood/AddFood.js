@@ -16,6 +16,11 @@ const Button = styled.button`
   font-size: 17px;
   font-weight: 700;
   color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+  &:hover {
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: -1px 3px 7px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const AddFood = props => (

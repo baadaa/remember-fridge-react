@@ -3,7 +3,6 @@ import addIcon from "../../img/added.svg";
 import expireIcon from "../../img/expires.svg";
 import foodIcon from "../../img/food.svg";
 import styled from "styled-components";
-import ColorPalette from "../ColorPalette/ColorPalette";
 
 const cardWidth = {
   large: 150,
@@ -114,7 +113,6 @@ const Front = styled.div`
     padding: 8px;
     border-radius: 30px;
     background: rgba(0, 0, 0, 0.75);
-    color: $berry;
     color: #fff;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
   }
@@ -225,22 +223,14 @@ const EditButtons = styled.nav`
 
     &.edit {
       left: 0;
-      background: ${ColorPalette.$green};
+      background: var(--green);
       border-radius: 0 0 0 10px;
-
-      &:hover {
-        // background: darken($green, 15%);
-      }
     }
 
     &.delete {
       right: 0;
-      background: ${ColorPalette.$berry};
+      background: var(--berry);
       border-radius: 0 0 10px 0;
-
-      &:hover {
-        // background: darken($berry, 15%);
-      }
     }
   }
 `;
@@ -338,13 +328,13 @@ const DeleteConfirmBtns = styled.div`
   }
 
   .deleteYes {
-    background: ${ColorPalette.$berry};
+    background: var(--berry);
     // color: lighten($berry, 50%);
   }
 
   .deleteNo {
     // color: darken($yellow, 28%);
-    background: ${ColorPalette.$yellow};
+    background: var(--yellow);
   }
 `;
 
