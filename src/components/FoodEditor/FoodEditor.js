@@ -4,12 +4,15 @@ import flatpickr from "flatpickr";
 import blank from "../../img/_.png";
 import styled from "styled-components";
 import photoPrompt from "../../img/add-photo.svg";
-import yes from "../../img/yes.svg";
-import noKo from "../../img/no-white.svg";
-import noGr from "../../img/no-green.svg";
-import trash from "../../img/trash.svg";
 
-import CloseButton from "../UIElements/CloseButton";
+import {
+  CloseButton,
+  SaveButton,
+  CancelButton,
+  RemoveButton,
+  CancelRemovalButton,
+  RemovePromptButton
+} from "../UIElements/ModalButtons";
 
 const EditorOverlay = styled.div`
   position: absolute;
@@ -285,78 +288,6 @@ const ButtonBlock = styled.div`
   }
   flex-wrap: wrap;
 
-  button {
-    border: none;
-    outline: none;
-    border-radius: 30px;
-    background: #333;
-    padding: 10px 20px;
-    height: 45px;
-    font-size: 14px;
-    font-weight: 700;
-    flex-basis: 48%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.3s, transform 0.3s;
-    &.save {
-      background: var(--saveButton);
-      transform: ${props =>
-        !props.isRemoving ? "translateY(0)" : "translateY(45px)"};
-      opacity: ${props => (!props.isRemoving ? 1 : 0)};
-      pointer-events: ${props => (!props.isRemoving ? "all" : "none")};
-      img.yes {
-        width: 12px;
-        height: 9px;
-        margin-right: 5px;
-      }
-    }
-    &.cancel {
-      background: transparent;
-      border: 1px solid var(--cancelButton);
-      color: var(--cancelButton);
-      transform: ${props =>
-        !props.isRemoving ? "translateY(0)" : "translateY(45px)"};
-      opacity: ${props => (!props.isRemoving ? 1 : 0)};
-      pointer-events: ${props => (!props.isRemoving ? "all" : "none")};
-      img.no {
-        width: 10px;
-        height: 10px;
-        margin-right: 5px;
-      }
-    }
-    &.remove {
-      transform: ${props =>
-        props.isRemoving ? "translateY(-45px)" : "translateY(0)"};
-      opacity: ${props => (props.isRemoving ? 1 : 0)};
-      pointer-events: ${props => (props.isRemoving ? "all" : "none")};
-      background: var(--removeButton);
-      img.trash {
-        width: 14px;
-        height: 15px;
-        margin-right: 5px;
-      }
-    }
-    &.cancelRemoval {
-      transform: ${props =>
-        props.isRemoving ? "translateY(-45px)" : "translateY(0)"};
-      opacity: ${props => (props.isRemoving ? 1 : 0)};
-      pointer-events: ${props => (props.isRemoving ? "all" : "none")};
-      background: transparent;
-      border: 1px solid var(--removeCancelButton);
-      color: var(--removeCancelButton);
-    }
-    &.removePrompt {
-      flex-basis: 100%;
-      margin-left: 0;
-      padding: 0;
-      height: auto;
-      text-align: center;
-      background: transparent;
-      color: var(--removeButton);
-      text-decoration: underline;
-    }
-  }
   .errorMsg {
     display: block;
     flex-basis: 100%;
@@ -393,6 +324,8 @@ class FoodEditor extends React.Component {
     this.props.editDate(dateStr, instance.element.id);
   };
   deleteFromEditor = () => {
+    this.resetMissing();
+    this.setState({ isRemoving: false });
     this.props.deleteFromEditor();
   };
   resetMissing = () => {
@@ -554,47 +487,49 @@ class FoodEditor extends React.Component {
             isRemoving={this.state.isRemoving}
             className={editorMode === "edit" ? "active" : ""}
           >
-            <button className="save" data-mode="edit" onClick={this.validate}>
-              <img src={yes} className="yes" alt="" /> Save
-            </button>
-            <button className="cancel" onClick={this.closeEditor}>
-              <img src={isDark ? noKo : noGr} className="no" alt="" />
-              Cancel
-            </button>
-            <button className="remove" onClick={this.deleteFromEditor}>
-              <img src={trash} className="trash" alt="" />
-              Remove
-            </button>
-            <button
-              className="cancelRemoval"
-              onClick={() =>
+            <SaveButton
+              click={this.validate}
+              isRemoving={this.state.isRemoving}
+              mode={editorMode}
+            />
+            <CancelButton
+              isRemoving={this.state.isRemoving}
+              isDark={isDark}
+              click={this.closeEditor}
+            />
+            <RemoveButton
+              isRemoving={this.state.isRemoving}
+              click={this.deleteFromEditor}
+              mode={editorMode}
+            />
+            <CancelRemovalButton
+              isRemoving={this.state.isRemoving}
+              click={() =>
                 this.setState({ isRemoving: !this.state.isRemoving })
               }
-            >
-              Keep it
-            </button>
-            <button
-              className="removePrompt"
-              onClick={() =>
+              mode={editorMode}
+            />
+            <RemovePromptButton
+              isRemoving={this.state.isRemoving}
+              click={() =>
                 this.setState({ isRemoving: !this.state.isRemoving })
               }
-            >
-              {this.state.isRemoving
-                ? "This action cannot be undone."
-                : "Remove this item"}
-            </button>
+              mode={editorMode}
+            />
           </ButtonBlock>
           <ButtonBlock className={editorMode === "add" ? "active" : ""}>
-            <button className="save" data-mode="add" onClick={this.validate}>
-              <img src={yes} className="yes" alt="" /> Add item
-            </button>
-            <button className="cancel" onClick={this.closeEditor}>
-              <img src={isDark ? noKo : noGr} className="no" alt="" />
-              Cancel
-            </button>
+            <SaveButton
+              click={this.validate}
+              isRemoving={this.state.isRemoving}
+              mode={editorMode}
+            />
+            <CancelButton isDark={isDark} click={this.closeEditor} />
             <span
               className="errorMsg"
-              style={{ display: this.state.error ? "block" : "none" }}
+              style={{
+                display:
+                  this.state.error && editorMode === "add" ? "block" : "none"
+              }}
             >
               {this.state.nameMissing
                 ? "Please provide a name or a photo."
