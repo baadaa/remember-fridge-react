@@ -138,10 +138,7 @@ class App extends React.Component {
       this.setState(
         {
           foodItems: JSON.parse(window.localStorage.getItem("myFridgeItems")),
-          darkMode: JSON.parse(window.localStorage.getItem("myFridgeDarkMode")),
-          shoppingList: JSON.parse(
-            window.localStorage.getItem("myFridgeShoppingList")
-          )
+          darkMode: JSON.parse(window.localStorage.getItem("myFridgeDarkMode"))
         },
         () => {
           document.body.className = `${
@@ -149,6 +146,13 @@ class App extends React.Component {
           }`;
         }
       );
+      if (this.localStorageIsAvailable("myFridgeShoppingList")) {
+        this.setState({
+          shoppingList: JSON.parse(
+            window.localStorage.getItem("myFridgeShoppingList")
+          )
+        });
+      }
     } else {
       this.setLocalStorage();
     }
