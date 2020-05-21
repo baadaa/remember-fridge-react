@@ -31,6 +31,7 @@ class App extends React.Component {
     listIsOpen: false,
     currentItem: this.blankItemState,
     foodItems: [],
+    shoppingList: [],
     editorMode: "add"
   };
   handleNavigation = e => {
@@ -122,19 +123,25 @@ class App extends React.Component {
       "myFridgeDarkMode",
       JSON.stringify(this.state.darkMode)
     );
+    window.localStorage.setItem(
+      "myFridgeShoppingList",
+      JSON.stringify(this.state.shoppingList)
+    );
   };
-  localStorageIsAvailable = () => {
-    return window.localStorage.getItem("myFridgeItems") ? true : false;
+  localStorageIsAvailable = data => {
+    return window.localStorage.getItem(data) ? true : false;
   };
   componentDidMount() {
     // eslint-disable-next-line
     (function(l){var i,s={touchend:function(){}};for(i in s)l.addEventListener(i,s)})(document); // sticky hover fix in iOS
-
-    if (this.localStorageIsAvailable()) {
+    if (this.localStorageIsAvailable("myFridgeItems")) {
       this.setState(
         {
           foodItems: JSON.parse(window.localStorage.getItem("myFridgeItems")),
-          darkMode: JSON.parse(window.localStorage.getItem("myFridgeDarkMode"))
+          darkMode: JSON.parse(window.localStorage.getItem("myFridgeDarkMode")),
+          shoppingList: JSON.parse(
+            window.localStorage.getItem("myFridgeShoppingList")
+          )
         },
         () => {
           document.body.className = `${
@@ -208,6 +215,9 @@ class App extends React.Component {
       this.setLocalStorage()
     );
   };
+  updateShoppingList = list => {
+    this.setState({ shoppingList: list }, () => this.setLocalStorage());
+  };
   render = () => (
     <>
       <SimpleHeader user={user} toggleSettings={this.toggleSettings} />
@@ -256,6 +266,8 @@ class App extends React.Component {
         isOpen={this.state.listIsOpen}
         isDark={this.state.darkMode}
         closeList={this.toggleList}
+        shoppingList={this.state.shoppingList}
+        updateShoppingList={this.updateShoppingList}
       />
     </>
   );

@@ -304,39 +304,18 @@ const ListModal = styled.div`
 `;
 class ShoppingList extends React.Component {
   state = {
-    newItem: "",
-    items: [
-      {
-        id: "123124",
-        content: "Avocado",
-        completed: false
-      },
-      {
-        id: "125434",
-        content: "Apple",
-        completed: true
-      },
-      {
-        id: "2131233124",
-        content: "Avocado",
-        completed: false
-      },
-      {
-        id: "154524",
-        content: "Avocado",
-        completed: true
-      }
-    ]
+    newItem: ""
   };
   addItem = () => {
     if (!this.state.newItem) return;
-    const currentList = this.state.items;
+    const currentList = this.props.shoppingList;
     const newItem = {
       id: `todo-${new Date().getTime()}`,
       content: this.state.newItem,
       completed: false
     };
-    this.setState({ items: [...currentList, newItem], newItem: "" });
+    this.props.updateShoppingList([...currentList, newItem]);
+    this.setState({ newItem: "" });
   };
   editIconContent = id => {
     console.log(id);
@@ -350,25 +329,28 @@ class ShoppingList extends React.Component {
     this.setState({ newItem: e.target.value });
   };
   deleteItem = id => {
-    const updatedList = this.state.items.filter(item => item.id !== id);
-    this.setState({ items: updatedList });
+    const updatedList = this.props.shoppingList.filter(item => item.id !== id);
+    this.props.updateShoppingList(updatedList);
   };
   toggleCheck = id => {
-    const updatedList = this.state.items.map(item => {
+    const updatedList = this.props.shoppingList.map(item => {
       return {
         id: item.id,
         content: item.content,
         completed: item.id === id ? !item.completed : item.completed
       };
     });
-    this.setState({ items: updatedList });
+    this.props.updateShoppingList(updatedList);
   };
   clearCompleted = () => {
-    const filteredList = this.state.items.filter(item => !item.completed);
-    this.setState({ items: filteredList });
+    const filteredList = this.props.shoppingList.filter(
+      item => !item.completed
+    );
+
+    this.props.updateShoppingList(filteredList);
   };
   render() {
-    const { isOpen, isDark, closeList } = this.props;
+    const { isOpen, isDark, closeList, shoppingList } = this.props;
     return (
       <ListModal isOpen={isOpen}>
         <div className="wrapper">
@@ -392,14 +374,8 @@ class ShoppingList extends React.Component {
               </button>
             </header>
             <section className="main-list">
-              {/* <input
-                className="toggle-all"
-                type="checkbox"
-                value={this.state.items.every(item => item.completed === true)}
-              />
-              <label htmlFor="toggle-all">Mark all as complete</label> */}
               <ul className="todo-list">
-                {this.state.items.map(item => (
+                {shoppingList.map(item => (
                   <li
                     className={item.completed ? "completed" : ""}
                     key={item.id}
@@ -430,7 +406,7 @@ class ShoppingList extends React.Component {
             <footer className="shoplist">
               <span className="list-count">
                 <strong>
-                  {this.state.items.filter(item => !item.completed).length}
+                  {shoppingList.filter(item => !item.completed).length}
                 </strong>{" "}
                 item left
               </span>
