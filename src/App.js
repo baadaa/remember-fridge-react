@@ -205,7 +205,11 @@ class App extends React.Component {
   };
   toggleList = () => {
     const isOpen = this.state.listIsOpen;
-    this.setState({ listIsOpen: !isOpen });
+    this.setState({ listIsOpen: !isOpen }, () => {
+      if (this.state.listIsOpen) {
+        window.scrollTo({ top: 0 });
+      }
+    });
   };
   loadSamples = () => {
     axios.get("/sampleData.json").then(res => {
