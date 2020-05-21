@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { CloseButton } from "../UIElements/ModalButtons";
-import addToList from "../../img/add-to-list.svg";
 const ListModal = styled.div`
   position: absolute;
   padding: 20px;
@@ -52,6 +51,7 @@ const ListModal = styled.div`
   .listapp {
     background: var(--shoppingListBg);
     width: 100%;
+    border-radius: 5px;
     max-width: 550px;
     position: relative;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
@@ -62,8 +62,7 @@ const ListModal = styled.div`
     color: var(--uncheckedIconLabel);
   }
 
-  .new-todo,
-  .edit {
+  .new-todo {
     position: relative;
     margin: 0;
     width: 100%;
@@ -80,7 +79,7 @@ const ListModal = styled.div`
   }
 
   .new-todo {
-    padding: 16px 40px 16px 48px;
+    padding: 16px 40px 16px 16px;
     border: none;
     background: rgba(0, 0, 0, 0.003);
     box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
@@ -88,46 +87,26 @@ const ListModal = styled.div`
   .add-todo-btn {
     border: none;
     outline: none;
-    img {
+    svg {
       width: 30px;
       height: 30px;
+      fill: var(--settingsContent);
     }
     position: absolute;
     top: 15px;
     right: 10px;
     cursor: pointer;
+    opacity: 0.4;
+    transition: opacity 0.3s;
+    &:hover {
+      opacity: 1;
+    }
   }
 
   .main-list {
     position: relative;
     z-index: 2;
     border-top: 1px solid var(--shoppingListBorder);
-  }
-
-  label[for="toggle-all"] {
-    display: none;
-  }
-
-  .toggle-all {
-    position: absolute;
-    top: -55px;
-    left: -8px;
-    width: 60px;
-    height: 34px;
-    text-align: center;
-    border: none; /* Mobile Safari */
-  }
-
-  .toggle-all::before {
-    content: "❯";
-    font-size: 1.7rem;
-    color: #e6e6e6;
-    box-sizing: border-box;
-    padding: 2rem;
-  }
-
-  .toggle-all:checked::before {
-    color: #737373;
   }
 
   .todo-list {
@@ -144,7 +123,6 @@ const ListModal = styled.div`
         /* auto, since non-WebKit browsers doesn't support input styling */
         height: auto;
         position: absolute;
-        // width: 0;
         top: 0;
         bottom: 0;
         margin: auto 0;
@@ -155,85 +133,44 @@ const ListModal = styled.div`
       &:last-child {
         border-bottom: none;
       }
-
-      &.editing {
-        border-bottom: none;
-        padding: 0;
-
-        & .edit {
-          display: block;
-          width: 506px;
-          padding: 13px 17px 12px 17px;
-          margin: 0 0 0 43px;
-        }
-
-        & .view {
-          display: none;
-        }
-      }
     }
-  }
-
-  .todo-list li .toggle::after {
-    background: red;
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-  }
-
-  .todo-list li .toggle:checked::after {
-    position: absolute;
-    background: red;
-    border-radius: 30px;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
   }
 
   .todo-list li label {
     white-space: pre-line;
     word-break: break-all;
     padding: 15px 60px 15px 15px;
-    margin-left: 35px;
-    display: block;
+    display: flex;
     line-height: 1.2;
-    // transition: color 0.4s;
     font-size: 1rem;
     font-weight: 200;
   }
 
   .todo-list li.completed label {
-    color: #d9d9d9;
+    color: var(--uncheckedIconLabel) !important;
     text-decoration: line-through;
   }
 
   .todo-list li .destroy {
     position: absolute;
     top: 0;
-    right: 10px;
+    right: 5px;
     bottom: 0;
     width: 40px;
     height: 40px;
     margin: auto 0;
     font-size: 2rem;
-    color: #cc9a9a;
+    opacity: 0.3;
+    color: var(--formLabelText);
     margin-bottom: 11px;
-    transition: color 0.2s ease-out;
+    transition: all 0.2s ease-out;
+    &:hover {
+      opacity: 1;
+    }
   }
 
   .todo-list li:hover .destroy {
     display: block;
-  }
-
-  .todo-list li .edit {
-    display: none;
-  }
-
-  .todo-list li.editing:last-child {
-    margin-bottom: -1px;
   }
 
   footer.shoplist {
@@ -308,20 +245,12 @@ const ListModal = styled.div`
     Can't use it globally since it destroys checkboxes in Firefox
   */
   @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    .toggle-all,
     .todo-list li .toggle {
       background: none;
     }
 
     .todo-list li .toggle {
       height: 40px;
-    }
-
-    .toggle-all {
-      -webkit-transform: rotate(90deg);
-      transform: rotate(90deg);
-      -webkit-appearance: none;
-      appearance: none;
     }
   }
 
@@ -333,6 +262,44 @@ const ListModal = styled.div`
     .filters {
       bottom: 10px;
     }
+  }
+  input[type="checkbox"] {
+    opacity: 0;
+    position: fixed;
+    width: 0;
+    &:focus + label {
+      border-color: var(--checkIconColor);
+      color: var(--checkIconLabel);
+    }
+    &:checked + label {
+      border-color: var(--checkIconColor);
+      color: var(--checkIconLabel);
+      .square {
+        background: var(--checkIconColor);
+        border-color: var(--checkIconColor);
+      }
+    }
+    &:checked + label .square {
+      background-image: url("data:image/svg+xml,%3Csvg width='13' height='9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5.5 7L12 1' stroke='%23FFF' stroke-width='2' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+      background-size: 11px;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-color: #39b3ca;
+      overflow: visible;
+    }
+    &[disabled] + label {
+      color: #999;
+      cursor: default;
+    }
+  }
+  .square {
+    background: var(--settingOverlaydBg);
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    margin-right: 15px;
+    display: inline-block;
+    border: 1px solid #bbb;
   }
 `;
 class ShoppingList extends React.Component {
@@ -419,12 +386,18 @@ class ShoppingList extends React.Component {
                 onKeyUp={this.checkForKey}
               />
               <button className="add-todo-btn" onClick={this.addItem}>
-                <img src={addToList} alt="" />
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 30">
+                  <path d="M20 7v6a1 1 0 01-1 1H6.4l1.8 1.8a1 1 0 010 1.4 1 1 0 01-1.4 0l-3.5-3.5a1 1 0 01-.2-.3 1 1 0 010-.8 1 1 0 01.2-.3l3.5-3.5a1 1 0 011.4 1.4L6.4 12H18V7a1 1 0 012 0z" />
+                </svg>
               </button>
             </header>
             <section className="main-list">
-              <input className="toggle-all" type="checkbox" />
-              <label htmlFor="toggle-all">Mark all as complete</label>
+              {/* <input
+                className="toggle-all"
+                type="checkbox"
+                value={this.state.items.every(item => item.completed === true)}
+              />
+              <label htmlFor="toggle-all">Mark all as complete</label> */}
               <ul className="todo-list">
                 {this.state.items.map(item => (
                   <li
@@ -439,10 +412,8 @@ class ShoppingList extends React.Component {
                         name={item.id}
                         onChange={() => this.toggleCheck(item.id)}
                       />
-                      <label
-                        htmlFor={item.id}
-                        onDoubleClick={() => console.log("attempting to edit")}
-                      >
+                      <label htmlFor={item.id}>
+                        <span className="square"></span>
                         {item.content}
                       </label>
                       <button
@@ -451,11 +422,6 @@ class ShoppingList extends React.Component {
                       >
                         &times;
                       </button>
-                      <input
-                        className="edit"
-                        value={item.content}
-                        onChange={() => this.editItemContent(item.id)}
-                      />
                     </div>
                   </li>
                 ))}
