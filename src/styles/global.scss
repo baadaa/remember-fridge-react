@@ -20,15 +20,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-:root,
 .lightMode {
   --cyan: #00a2d9;
   --berry: #b7295a;
   --green: #7ab800;
   --yellow: #f2af00;
-  --bodyBg: #00A2D9;
+  --bodyBg: #00a2d9;
   --containerBg: #fff;
-  --addButton: #7AB800;
+  --addButton: #7ab800;
   --content: #202020;
   --settingOverlayBg: #fff;
   --settingsContent: #222;
@@ -38,15 +37,15 @@ body {
   --formLabelText: #999;
   --saveButton: #7ab800;
   --cancelButton: #7ab800;
-  --removeButton: #B7295A;
-  --removeCancelButton: #B7295A;
+  --removeButton: #b7295a;
+  --removeCancelButton: #b7295a;
   --checkIconColor: #00a2d9;
   --checkIconLabel: #202020;
   --uncheckedIconLabel: #777;
   --missingField: #b7295a;
   --disabledButtonBg: #eee;
   --disabledButtonColor: #999;
-  --modalSubsectionBg: #FFF1F6;
+  --modalSubsectionBg: #fff1f6;
   --modalSubsectionBorder: #b7295a;
   --modalSubsectionText: #333;
   --shoppingListBg: #fff;
@@ -66,7 +65,7 @@ body {
   --formLabelText: #999;
   --saveButton: #7ab800;
   --cancelButton: #f4f4f4;
-  --removeButton: #B7295A;
+  --removeButton: #b7295a;
   --removeCancelButton: #f4f4f4;
   --checkIconColor: #00a2d9;
   --checkIconLabel: #f4f4f4;

@@ -134,11 +134,14 @@ class App extends React.Component {
   componentDidMount() {
     // eslint-disable-next-line
     (function(l){var i,s={touchend:function(){}};for(i in s)l.addEventListener(i,s)})(document); // sticky hover fix in iOS
-    if (this.localStorageIsAvailable("myFridgeItems")) {
+    if (this.localStorageIsAvailable("myFridgeShoppingList")) {
       this.setState(
         {
           foodItems: JSON.parse(window.localStorage.getItem("myFridgeItems")),
-          darkMode: JSON.parse(window.localStorage.getItem("myFridgeDarkMode"))
+          darkMode: JSON.parse(window.localStorage.getItem("myFridgeDarkMode")),
+          shoppingList: JSON.parse(
+            window.localStorage.getItem("myFridgeShoppingList")
+          )
         },
         () => {
           document.body.className = `${
@@ -146,15 +149,11 @@ class App extends React.Component {
           }`;
         }
       );
-      if (this.localStorageIsAvailable("myFridgeShoppingList")) {
-        this.setState({
-          shoppingList: JSON.parse(
-            window.localStorage.getItem("myFridgeShoppingList")
-          )
-        });
-      }
     } else {
       this.setLocalStorage();
+      document.body.className = `${
+        this.state.darkMode ? "darkMode" : "lightMode"
+      }`;
     }
   }
   saveChanges = () => {
