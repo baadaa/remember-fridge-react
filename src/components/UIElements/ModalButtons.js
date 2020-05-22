@@ -125,7 +125,7 @@ const DataReset = styled.button`
     props.type === "load" ? "#fff" : "var(--removeButton)"};
 `;
 const SaveButton = props => (
-  <Save data-mode="edit" onClick={props.click} isRemoving={props.isRemoving}>
+  <Save onClick={props.click} isRemoving={props.isRemoving}>
     <img src={yes} alt="" />
     {props.mode === "edit" ? "Save" : "Add item"}
   </Save>

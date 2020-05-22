@@ -4,6 +4,8 @@ import flatpickr from "flatpickr";
 import blank from "../../img/_.png";
 import styled from "styled-components";
 import photoPrompt from "../../img/add-photo.svg";
+import rotateDark from "../../img/rotate-dark.svg";
+import rotateLight from "../../img/rotate-light.svg";
 
 import {
   CloseButton,
@@ -89,6 +91,7 @@ const TopSectionWrapper = styled.div`
   margin-left: 80px;
   margin-bottom: 30px;
   display: flex;
+  position: relative;
   justify-content: space-between;
   align-items: flex-end;
   @media screen and (max-width: 800px) {
@@ -104,6 +107,29 @@ const TopSectionWrapper = styled.div`
   input.sectionChange,
   label.sectionChange {
     margin-top: 5px;
+  }
+  .rotate {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    bottom: 0px;
+    left: -50px;
+    background: transparent;
+    border: none;
+    color: var(--content);
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    background: var(--formFieldBg);
+    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+    img {
+      width: 35px;
+      height: 30px;
+    }
   }
   input[type="radio"] {
     opacity: 0;
@@ -323,12 +349,15 @@ class FoodEditor extends React.Component {
     this.setState({ isRemoving: false });
     this.props.deleteFromEditor();
   };
-  resetMissing = () => {
-    this.setState({
-      nameMissing: false,
-      addedDateMissing: false,
-      error: false
-    });
+  resetMissing = cb => {
+    this.setState(
+      {
+        nameMissing: false,
+        addedDateMissing: false,
+        error: false
+      },
+      cb
+    );
   };
   editField = item => {
     this.resetMissing();
@@ -352,8 +381,8 @@ class FoodEditor extends React.Component {
     this.resetMissing();
     this.props.takePhoto(e);
   };
-  validate = e => {
-    const mode = e.target.dataset.mode;
+  validate = () => {
+    const mode = this.props.editorMode;
     const {
       currentItem: { img = "", name = "", added = "" }
     } = this.props;
@@ -365,12 +394,13 @@ class FoodEditor extends React.Component {
       this.setState({ addedDateMissing: true, error: true });
       return;
     }
-    this.resetMissing();
-    if (mode === "edit") {
-      this.props.saveChanges();
-    } else {
-      this.props.addItem();
-    }
+    this.resetMissing(() => {
+      if (mode === "edit") {
+        this.props.saveChanges();
+      } else {
+        this.props.addItem();
+      }
+    });
   };
   render() {
     const {
@@ -384,12 +414,20 @@ class FoodEditor extends React.Component {
       isOpen,
       editorMode,
       takePhoto,
+      rotatePhoto,
       currentSection,
       isDark
     } = this.props;
 
-    const TopSection = ({ img, takePhoto }) => (
+    const TopSection = ({ img }) => (
       <TopSectionWrapper>
+        <button
+          className="rotate"
+          onClick={rotatePhoto}
+          style={{ display: img === "" ? "none" : "" }}
+        >
+          <img src={isDark ? rotateLight : rotateDark} alt="" />
+        </button>
         <PhotoInput missing={this.state.nameMissing}>
           <label>
             <input

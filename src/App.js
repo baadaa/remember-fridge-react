@@ -11,7 +11,7 @@ import FoodEditor from "./components/FoodEditor/FoodEditor";
 import SettingsModal from "./components/SettingsModal/SettingsModal";
 import { BottomNavBar } from "./components/NavBar/NavBar";
 
-import takePhotoUtil from "./components/TakePhoto";
+import { takePhoto, rotatePhoto } from "./components/TakePhoto";
 
 class App extends React.Component {
   blankItemState = {
@@ -112,7 +112,15 @@ class App extends React.Component {
       const itemWithNewPhoto = { ...itemBeforePhoto, img: photo };
       this.setState({ currentItem: itemWithNewPhoto });
     };
-    takePhotoUtil(e, updatePhoto);
+    takePhoto(e, updatePhoto);
+  };
+  rotatePhoto = () => {
+    const itemBeforePhoto = this.state.currentItem;
+    const updatePhoto = photo => {
+      const itemWithNewPhoto = { ...itemBeforePhoto, img: photo };
+      this.setState({ currentItem: itemWithNewPhoto });
+    };
+    rotatePhoto(this.state.currentItem.img, -90, updatePhoto);
   };
   setLocalStorage = () => {
     window.localStorage.setItem(
@@ -255,6 +263,7 @@ class App extends React.Component {
         editField={this.editField}
         editCategory={this.editCategory}
         takePhoto={this.takePhoto}
+        rotatePhoto={this.rotatePhoto}
         editDate={this.editDate}
         deleteFromEditor={this.deleteFromEditor}
         saveChanges={this.saveChanges}

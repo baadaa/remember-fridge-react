@@ -17,13 +17,13 @@ body {
   transition: all 0.5s;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.lightMode {
   --cyan: #00a2d9;
   --berry: #b7295a;
   --green: #7ab800;
   --yellow: #f2af00;
+}
+
+.lightMode {
   --bodyBg: #00a2d9;
   --containerBg: #fff;
   --addButton: #7ab800;
