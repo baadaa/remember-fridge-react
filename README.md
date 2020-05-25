@@ -1,68 +1,60 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# My Fridge
 
-## Available Scripts
+https://rememberfridge.com
 
-In the project directory, you can run:
+Simple SPA for your home. Stay on top of what's in your fridge — wherever you are, whenever it is.
 
-### `npm start`
+- [x] Manage inventory
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [x] Manage grocery list
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- [ ] Cloud sync (Firebase integration in progress)
 
-### `npm test`
+- [x] Dark mode support
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Getting started
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Bootstrapped with `create-react-app` and styled with `styled-component`. Live demo at https://rememberfridge.com
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+1. Install packages: `npm install`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Start dev server: `npm start` and open [http://localhost:3000](http://localhost:3000)
 
-### `npm run eject`
+1. Build: `npm run build` for production build to the `build` folder.<br>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+---
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Manage inventory
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<img src="https://res.cloudinary.com/dm4tymaa3/image/upload/v1590416622/my_fridge_app/screenshots/phone_listview_light_m2kqxd.png" alt="light mode" style="max-width: 350px;">
+<img src="https://res.cloudinary.com/dm4tymaa3/image/upload/v1590416623/my_fridge_app/screenshots/phone_listview_dark_ym0t8v.png" alt="dark mode" style="max-width: 350px;">
+<img src="https://res.cloudinary.com/dm4tymaa3/image/upload/v1590416623/my_fridge_app/screenshots/pad_listview_light_teyfrt.png" alt="light mode" style="max-width: 700px;">
+<img src="https://res.cloudinary.com/dm4tymaa3/image/upload/v1590416622/my_fridge_app/screenshots/pad_listview_dark_qfvlgj.png" alt="dark mode" style="max-width: 700px;">
 
-## Learn More
+### Manage Grocery List
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+An older iteration of [TODO MVC](http://todomvc.com/), simplified.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<img src="https://res.cloudinary.com/dm4tymaa3/image/upload/v1590416622/my_fridge_app/screenshots/phone_shopping_light_rt4uoj.png" alt="Shopping list (light mode)" style="max-width: 350px;">
+<img src="https://res.cloudinary.com/dm4tymaa3/image/upload/v1590416622/my_fridge_app/screenshots/phone_shopping_dark_pu1mfj.png" alt="Shopping list (dark mode)" style="max-width: 350px;">
 
-### Code Splitting
+### Add/edit/remove items
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+<img src="https://res.cloudinary.com/dm4tymaa3/image/upload/v1590416623/my_fridge_app/screenshots/phone_add_light_etzc7k.png" alt="Editor view (light mode)" style="max-width: 350px;">
+<img src="https://res.cloudinary.com/dm4tymaa3/image/upload/v1590416622/my_fridge_app/screenshots/phone_add_dark_coziap.png" alt="Editor view (dark mode)" style="max-width: 350px;">
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+## Project plans
 
-### Making a Progressive Web App
+- Integrate Firebase for authetication and database sync
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+- Refactor component codes to:
 
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+  - Prepare proper routing instead of all components being mounted at all times
+  - Reduce redundant markup — _styles, JSX structure, state management..._
+  - Achieve more readability — _variable naming, method calls, component hierarchy..._
